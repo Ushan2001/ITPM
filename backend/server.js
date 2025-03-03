@@ -1,0 +1,29 @@
+const express = require("express");
+const mongoose = require("mongoose");
+require("dotenv").config();
+const cors = require("cors");
+const morgan = require("morgan");
+const startServer = require("./config/db");
+
+process.env.TZ = "Asia/Colombo";
+
+const userRoute = require("./routes/user-route");
+
+const path = require("path");
+
+const app = express();
+app.use(cors());
+app.use(morgan("combined"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/v1/user", userRoute);
+
+app.use(
+  "/api/v1/uploads/image/profile",
+  express.static(path.join(__dirname, "./uploads/image/profile-pic"))
+);
+
+const PORT = process.env.PORT || 5000;
+
+startServer(app, PORT);
