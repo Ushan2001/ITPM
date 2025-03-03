@@ -12,8 +12,7 @@ const handleErrors = (res, error) => {
 };
 
 const signUp = async (req, res) => {
-  const { name, email, password, phoneNo, address, location, type, status } =
-    req.body;
+  const { name, email, password, phoneNo, address, type, status } = req.body;
 
   const { error } = validateSignup(req.body);
   if (error) {
@@ -27,6 +26,7 @@ const signUp = async (req, res) => {
     }
 
     const profilePic = req.file ? `${req.file.filename}` : null;
+    const location = req.body.location ? JSON.parse(req.body.location) : null;
 
     const hashedPassword = hashPassword(password);
     const user = new User({
@@ -37,7 +37,13 @@ const signUp = async (req, res) => {
       profilePic,
       address,
       type,
-      location,
+      location: location
+        ? {
+            name: location.name,
+            longitude: location.longitude,
+            latitude: location.latitude,
+          }
+        : null,
       status,
     });
 

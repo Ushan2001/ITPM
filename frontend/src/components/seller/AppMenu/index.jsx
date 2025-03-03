@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../store/actions";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
-import logo from "../../assests/loginImage.svg";
+import logo from "../../../assests/loginImage.svg";
 import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 
@@ -56,7 +56,7 @@ const AppMenu = () => {
 
   const menuItems = [
     {
-      label: "Dashboard",
+      label: "Sub",
       icon: "pi pi-chart-line",
       command: () => navigate("/dashboard"),
     },

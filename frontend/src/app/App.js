@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AdminAppMenu from "../components/admin/AppMenu";
+import SellerAppMenu from "../components/seller/AppMenu";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "../store/reducers";
@@ -36,6 +37,7 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
   const largeScreen = window.innerWidth >= 1920;
+  const userType = localStorage.getItem("userType");
 
   return (
     <div
@@ -46,10 +48,19 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
       }}
     >
       {isLoggedIn && !isLoginPage && (
-        <AdminAppMenu
-          panelMenuVisible={panelMenuVisible}
-          setPanelMenuVisible={setPanelMenuVisible}
-        />
+        <>
+          {userType === "admin" ? (
+            <AdminAppMenu
+              panelMenuVisible={panelMenuVisible}
+              setPanelMenuVisible={setPanelMenuVisible}
+            />
+          ) : userType === "seller" ? (
+            <SellerAppMenu
+              panelMenuVisible={panelMenuVisible}
+              setPanelMenuVisible={setPanelMenuVisible}
+            />
+          ) : null}
+        </>
       )}
       <div
         style={{

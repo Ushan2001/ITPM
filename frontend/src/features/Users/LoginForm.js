@@ -4,11 +4,14 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { Password } from "primereact/password";
+import { Dialog } from "primereact/dialog";
 import { ProgressSpinner } from "primereact/progressspinner";
 import config from "../../config";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/actions";
 import loginImage from "../../assests/loging.png";
+import SignupForm from "./SignupForm";
+import "./style.css";
 
 const AdminLoginForm = ({ admin }) => {
   const [formData, setFormData] = useState(
@@ -18,6 +21,7 @@ const AdminLoginForm = ({ admin }) => {
     }
   );
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useRef(null);
@@ -30,7 +34,7 @@ const AdminLoginForm = ({ admin }) => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${config.apiUrl}/api/v1/web/user/signin`, {
+      const response = await fetch(`${config.apiUrl}/api/v1/user/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,18 +48,26 @@ const AdminLoginForm = ({ admin }) => {
         throw new Error(data.message || "Failed to log in");
       }
 
-      if (!data.token) {
+      if (!data.token || !data.userData.type) {
         throw new Error("Incomplete response data");
       }
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("userType", data.userData.type);
 
       dispatch(
         loginSuccess({
           token: data.token,
+          userType: data.userData.type,
         })
       );
-      navigate("/dashboard");
+      if (data.userData.type === "admin") {
+        navigate("/admin-dashboard");
+      } else if (data.userData.type === "buyer") {
+        navigate("/buyer-dashboard");
+      } else if (data.userData.type === "seller") {
+        navigate("/seller-dashboard");
+      }
     } catch (error) {
       console.error("Error:", error.message);
       toast.current.show({
@@ -155,8 +167,22 @@ const AdminLoginForm = ({ admin }) => {
             outlined
           />
         </div>
+        <div className="account-container">
+          <span>
+            You don't have any account?{" "}
+            <a
+              href="##"
+              className="signup-link"
+              onClick={() => setVisible(true)}
+            >
+              Signup
+            </a>
+          </span>
+        </div>
+
         <Toast ref={toast} />
       </div>
+
       <div
         style={{
           width: "50%",
@@ -183,6 +209,14 @@ const AdminLoginForm = ({ admin }) => {
           }}
         ></div>
       </div>
+      <Dialog
+        header="Signup Form"
+        visible={visible}
+        style={{ width: "80%" }}
+        onHide={() => setVisible(false)}
+      >
+        <SignupForm />
+      </Dialog>
     </div>
   );
 };

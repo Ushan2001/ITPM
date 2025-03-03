@@ -17,11 +17,13 @@ const authReducer = (state = initialState, action) => {
         token: action.payload.token,
         userId: action.payload.userId,
         userName: action.payload.userName,
+        userType: action.payload.userType
       };
     case LOGOUT:
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("userName");
+      localStorage.removeItem("userType");
       return {
         ...state,
         isLoggedIn: false,
