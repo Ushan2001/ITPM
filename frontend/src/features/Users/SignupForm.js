@@ -5,9 +5,12 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { FileUpload } from "primereact/fileupload";
 import { Toast } from "primereact/toast";
+import { Card } from "primereact/card";
+import { Divider } from "primereact/divider";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import axios from "axios";
 import config from "../../config";
+import "./style.css";
 
 const SignupForm = () => {
   const [name, setName] = useState("");
@@ -103,7 +106,6 @@ const SignupForm = () => {
         detail: "Your account has been created successfully!",
         life: 3000,
       });
-
       setName("");
       setEmail("");
       setPassword("");
@@ -131,148 +133,143 @@ const SignupForm = () => {
   });
 
   return (
-    <div>
-      <div className="cardSeccion p-4">
-        <Toast ref={toast} />
-      </div>
-      <div className="headerText">
-        <span>
-          <h4>
-            <i
-              className="pi pi-user-plus"
-              style={{
-                marginRight: "10px",
-                fontSize: "20px",
-                fontWeight: "600",
-              }}
-            ></i>
+    <div className="signup-container">
+      <Card
+        className="signup-card animate-card"
+        title={
+          <div className="card-header">
+            <i className="pi pi-user-plus"></i>
             Create Account
-          </h4>
-        </span>
-      </div>
-      <div
-        className="p-fluid p-formgrid"
-        style={{ width: "90%", margin: "auto", padding: "auto" }}
-        id="formFrame"
+          </div>
+        }
       >
-        <div className="form-row">
-          <div className="p-field">
-            <label htmlFor="name">Full Name*</label>
-            <InputText
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your name"
-              required
-            />
-          </div>
-          <div className="p-field">
-            <label htmlFor="email">Email*</label>
-            <InputText
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="p-field">
-            <label htmlFor="password">Password*</label>
-            <Password
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              toggleMask
-              feedback
-              required
-              placeholder="Create a password"
-            />
-          </div>
-          <div className="p-field">
-            <label htmlFor="type">Account Type*</label>
-            <Dropdown
-              value={type}
-              onChange={(e) => setType(e.value)}
-              options={userTypes}
-              placeholder="Select account type"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="p-field">
-            <label htmlFor="phoneNo">Phone Number</label>
-            <InputText
-              id="phoneNo"
-              value={phoneNo}
-              onChange={(e) => setPhoneNo(e.target.value)}
-              placeholder="Enter phone number"
-            />
-          </div>
-          <div className="p-field">
-            <label htmlFor="address">Address</label>
-            <InputText
-              id="address"
-              value={address}
-              onChange={(e) => {
-                setAddress(e.target.value);
-                setLocation((prev) => ({ ...prev, name: e.target.value }));
-              }}
-              placeholder="Enter your address"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="p-field">
-            <label htmlFor="location">Location (Click on map to select)</label>
-            {isLoaded ? (
-              <div style={{ height: "300px", width: "100%" }}>
-                <GoogleMap
-                  mapContainerStyle={{ height: "100%", width: "100%" }}
-                  center={mapCenter}
-                  zoom={10}
-                  onClick={handleMapClick}
-                >
-                  {location.latitude && location.longitude && (
-                    <Marker
-                      position={{
-                        lat: location.latitude,
-                        lng: location.longitude,
-                      }}
-                    />
-                  )}
-                </GoogleMap>
-              </div>
-            ) : (
-              <div>Loading Map...</div>
-            )}
+        <Toast ref={toast} />
+
+        <div className="signup-form">
+          <div className="form-grid">
+            <div className="p-field animate-input">
+              <label htmlFor="name">Full Name*</label>
+              <InputText
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name"
+                required
+              />
+            </div>
+
+            <div className="p-field animate-input">
+              <label htmlFor="email">Email*</label>
+              <InputText
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div className="p-field animate-input">
+              <label htmlFor="password">Password*</label>
+              <Password
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                toggleMask
+                feedback
+                required
+                placeholder="Create a password"
+              />
+            </div>
+
+            <div className="p-field animate-input">
+              <label htmlFor="type">Account Type*</label>
+              <Dropdown
+                value={type}
+                onChange={(e) => setType(e.value)}
+                options={userTypes}
+                placeholder="Select account type"
+              />
+            </div>
+
+            <div className="p-field animate-input">
+              <label htmlFor="phoneNo">Phone Number</label>
+              <InputText
+                id="phoneNo"
+                value={phoneNo}
+                onChange={(e) => setPhoneNo(e.target.value)}
+                placeholder="Enter phone number"
+              />
+            </div>
+
+            <div className="p-field animate-input">
+              <label htmlFor="address">Address</label>
+              <InputText
+                id="address"
+                value={address}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                  setLocation((prev) => ({ ...prev, name: e.target.value }));
+                }}
+                placeholder="Enter your address"
+              />
+            </div>
           </div>
 
-          <div className="p-field">
-            <label htmlFor="profilePic">Profile Picture</label>
-            <FileUpload
-              name="profilePic"
-              accept="image/*"
-              customUpload
-              auto
-              uploadHandler={onFileSelect}
-              chooseLabel="Select Image"
-            />
-          </div>
-        </div>
+          <Divider />
 
-        <Button
-          label={loading ? "Creating Account..." : "Sign Up"}
-          icon={loading ? "pi pi-spin pi-spinner" : "pi pi-user-plus"}
-          onClick={handleSubmit}
-          className="submitButton mt-3"
-          disabled={loading}
-        />
-      </div>
-      <br />
-      <br />
+          <div className="form-additional">
+            <div className="p-field map-field">
+              <label htmlFor="location">
+                Location (Click on map to select)
+              </label>
+              {isLoaded ? (
+                <div className="map-container animate-map">
+                  <GoogleMap
+                    mapContainerStyle={{ height: "100%", width: "100%" }}
+                    center={mapCenter}
+                    zoom={10}
+                    onClick={handleMapClick}
+                  >
+                    {location.latitude && location.longitude && (
+                      <Marker
+                        position={{
+                          lat: location.latitude,
+                          lng: location.longitude,
+                        }}
+                      />
+                    )}
+                  </GoogleMap>
+                </div>
+              ) : (
+                <div>Loading Map...</div>
+              )}
+            </div>
+
+            <div className="p-field upload-field">
+              <label htmlFor="profilePic">Profile Picture</label>
+              <FileUpload
+                name="profilePic"
+                accept="image/*"
+                customUpload
+                auto
+                uploadHandler={onFileSelect}
+                chooseLabel="Select Image"
+                className="animate-upload"
+              />
+            </div>
+          </div>
+
+          <Button
+            label={loading ? "Creating Account..." : "Sign Up"}
+            icon={loading ? "pi pi-spin pi-spinner" : "pi pi-user-plus"}
+            onClick={handleSubmit}
+            className="submit-button"
+            disabled={loading}
+          />
+        </div>
+      </Card>
     </div>
   );
 };

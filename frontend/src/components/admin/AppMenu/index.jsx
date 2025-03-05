@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../store/actions";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
-import logo from "../../../assests/loginImage.svg";
+import logo from "../../../assests/sidebar.png";
 import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 
@@ -67,47 +67,13 @@ const AppMenu = () => {
       items: [
         {
           label: "Permission",
-          icon: "pi pi-lock-open",
-          command: () => navigate("/inactive"),
+          icon: "pi pi-exclamation-triangle",
+          command: () => navigate("/inactive-users"),
         },
         {
-          label: "View",
+          label: "User List",
           icon: "pi pi-list-check",
-          command: () => navigate("/active"),
-        },
-      ],
-    },
-    {
-      label: "Clubs",
-      icon: "pi pi-globe",
-      expanded: false,
-      items: [
-        {
-          label: "Add Clubs",
-          icon: "pi pi-file-plus",
-          command: () => navigate("/add-club"),
-        },
-        {
-          label: "View",
-          icon: "pi pi-list-check",
-          command: () => navigate("/view-club"),
-        },
-      ],
-    },
-    {
-      label: "Items",
-      icon: "pi pi-objects-column",
-      expanded: false,
-      items: [
-        {
-          label: "Permission",
-          icon: "pi pi-lock-open",
-          command: () => navigate("/pending-items"),
-        },
-        {
-          label: "View",
-          icon: "pi pi-list-check",
-          command: () => navigate("/approved-items"),
+          command: () => navigate("/active-users"),
         },
       ],
     },
@@ -117,9 +83,9 @@ const AppMenu = () => {
       expanded: false,
       items: [
         {
-          label: "App Settings",
-          icon: "pi pi-wrench",
-          command: () => navigate("/app-settings"),
+          label: "Add Polygon",
+          icon: "pi pi-map",
+          command: () => navigate("/plygon"),
         },
       ],
     },
@@ -131,9 +97,9 @@ const AppMenu = () => {
         src={logo}
         alt="Logo"
         style={{
-          width: "100%",
-          height: "50px",
-          marginLeft: "16px",
+          width: "50%",
+          height: "auto",
+          marginLeft: "1px",
           cursor: "pointer",
         }}
         onClick={handleLogo}

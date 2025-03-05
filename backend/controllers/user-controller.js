@@ -161,8 +161,27 @@ const deleteProfile = async (req, res) => {
   }
 };
 
+const deleteProfileById = async (req, res) => {
+  const userId = req.params.id;
+
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required!" });
+  }
+
+  try {
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    return res.status(200).json({ message: "Profile deleted successfully!" });
+  } catch (error) {
+    return handleErrors(res, error);
+  }
+};
+
 const updateStatus = async (req, res) => {
-  const userId = extractUserId(req);
+  const userId = req.params.id;
   if (!userId) {
     return res.status(401).json({ message: "Unauthorized!" });
   }
@@ -216,13 +235,49 @@ const getInactiveUsers = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const userId = extractUserId(req);
+  const { oldPassword, newPassword } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required!" });
+  }
+
+  if (!oldPassword || !newPassword) {
+    return res
+      .status(400)
+      .json({ message: "Both old and new passwords are required!" });
+  }
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    const isPasswordCorrect = verifyPassword(oldPassword, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ message: "Incorrect old password!" });
+    }
+    const hashedNewPassword = hashPassword(newPassword);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    return res.status(200).json({ message: "Password changed successfully!" });
+  } catch (error) {
+    return handleErrors(res, error);
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
   getUserById,
   updateProfile,
   deleteProfile,
+  deleteProfileById,
   updateStatus,
   getActiveUsers,
-  getInactiveUsers
+  getInactiveUsers,
+  changePassword
 };

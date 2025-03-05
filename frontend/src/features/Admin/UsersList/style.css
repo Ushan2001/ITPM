@@ -1,0 +1,110 @@
+/* User Management Component Styles */
+
+/* Global Styles */
+.user-management-container {
+    background-color: #f4f6f9;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* DataTable Enhancements */
+  .p-datatable {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+  
+  .p-datatable .p-datatable-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 15px;
+  }
+  
+  .p-datatable .p-column-header {
+    background-color: #f1f3f5;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+  }
+  
+  /* Profile Picture Column */
+  .p-datatable .profile-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .p-datatable .profile-picture img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .p-datatable .profile-picture img:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Status Tag Styles */
+  .p-tag.p-tag-success {
+    background-color: #28a745;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+  
+  .p-tag.p-tag-danger {
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+  
+  /* Action Buttons */
+  .p-button.p-button-rounded {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .p-button.p-button-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .p-button.p-button-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  
+  .p-button:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+  
+  /* Loading Skeleton */
+  .p-skeleton {
+    background-color: #e9ecef;
+    border-radius: 8px;
+  }
+  
+  /* Responsive Adjustments */
+  @media screen and (max-width: 768px) {
+    .user-management-container {
+      padding: 10px;
+    }
+  
+    .p-datatable .p-datatable-tbody > tr > td {
+      padding: 10px;
+    }
+  }

@@ -8,6 +8,7 @@ const startServer = require("./config/db");
 process.env.TZ = "Asia/Colombo";
 
 const userRoute = require("./routes/user-route");
+const polygonRoute = require("./routes/polygon-route");
 
 const path = require("path");
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/polygon", polygonRoute);
 
 app.use(
   "/api/v1/uploads/image/profile",
