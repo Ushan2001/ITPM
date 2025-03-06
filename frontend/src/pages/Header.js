@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardLogo from "../logo/BuySellNexusLogo";
+import Video from "../assests/dvideo.mp4";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -20,7 +20,17 @@ export default function Header() {
           </button>
         </div>
         <div className="hero-image">
-          <DashboardLogo width={450} height={450} />
+          <video
+            width="100%"
+            height="auto"
+            style={{ borderRadius: "20px", opacity: "0.8" }}
+            autoPlay
+            loop
+            muted
+          >
+            <source src={Video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
       </header>
     </div>
