@@ -12,7 +12,8 @@ const handleErrors = (res, error) => {
 };
 
 const signUp = async (req, res) => {
-  const { name, email, password, phoneNo, address, storeName, type, status } = req.body;
+  const { name, email, password, phoneNo, address, storeName, type, status } =
+    req.body;
 
   const { error } = validateSignup(req.body);
   if (error) {
@@ -283,6 +284,19 @@ const getActiveSellers = async (req, res) => {
   }
 };
 
+const getActiveBuyers = async (req, res) => {
+  try {
+    const activeBuyers = await User.find({
+      type: "buyer",
+      status: "active",
+    }).select("-password -createdAt -updatedAt -__v");
+
+    return res.status(200).json({ buyers: activeBuyers });
+  } catch (error) {
+    return handleErrors(res, error);
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
@@ -295,4 +309,5 @@ module.exports = {
   getInactiveUsers,
   changePassword,
   getActiveSellers,
+  getActiveBuyers
 };

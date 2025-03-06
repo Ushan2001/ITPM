@@ -1,137 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Toast } from "primereact/toast";
-import config from "../config";
-import DefaultImg from "../assests/user.png";
-import DashboardLogo from "../Logo/BuySellNexusLogo";
+import React from "react";
 
 import "./style.css";
+import NavBar from "./NavBar";
+import Footer from "./Footer";
+import GetStartForm from "./GetStartForm";
+import Pricing from "./Pricing";
+import Header from "./Header";
 
 const LandingPage = () => {
-  const [user, setUser] = useState("");
-  const [, setLoading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const toast = useRef(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true);
-      fetchaUser();
-    } else {
-      setIsAuthenticated(false);
-      setLoading(false);
-    }
-  }, []);
-
-  const fetchaUser = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${config.apiUrl}/api/v1/user/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-      const data = await response.json();
-      setUser(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error to fetch user data", error);
-      setLoading(false);
-    }
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
-  const handleSignUp = () => {
-    navigate("/signup");
-  };
-
-  const handleProfile = () => {
-    navigate("/profile");
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("token");
-    localStorage.removeItem("userType");
-    navigate("/");
-    setUser("");
-  };
   return (
     <div className="landing-container">
-      <Toast ref={toast} />
-      <nav className="navbar">
-        <div className="logo">
-          <h1>BuySell Nexus</h1>
-        </div>
-        <div className="nav-links">
-          <a href="#features">Features</a>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <div className="nav-auth">
-          <div className="user-profile">
-            <img
-              src={
-                user.profilePic
-                  ? `${config.apiUrl}/api/v1/uploads/image/profile/${user.profilePic}`
-                  : DefaultImg
-              }
-              alt="Profile"
-              className="profile-img"
-              onClick={handleProfile}
-              style={{ cursor: "pointer" }}
-            />
-            <span
-              className="username"
-              onClick={handleProfile}
-              style={{ cursor: "pointer" }}
-            >
-              Hi! {user.name || "Guest"}
-            </span>
-          </div>
-          <>
-            {isAuthenticated ? (
-              <>
-                <button className="login-btn" onClick={handleLogout}>
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <button className="login-btn" onClick={handleLogin}>
-                  Login
-                </button>
-                <button className="signup-btn" onClick={handleSignUp}>
-                  Sign Up
-                </button>
-              </>
-            )}
-          </>
-        </div>
-      </nav>
-
-      <header className="hero">
-        <div className="hero-content">
-          <h1>Streamline Your Buying & Selling Process</h1>
-          <p>The ultimate management system for businesses of all sizes</p>
-          <button className="cta-btn">Get Started</button>
-        </div>
-        <div className="hero-image">
-          <DashboardLogo width={450} height={450} />
-        </div>
-      </header>
-
+      <NavBar />
+      <Header />
       <section id="features" className="features">
         <h2>Why Choose BuySell Nexus</h2>
         <div className="feature-cards">
@@ -208,97 +88,13 @@ const LandingPage = () => {
       </section>
 
       <section id="pricing" className="pricing">
-        <h2>Pricing Plans</h2>
-        <div className="pricing-cards">
-          <div className="pricing-card">
-            <h3>Starter</h3>
-            <div className="price">
-              $29<span>/month</span>
-            </div>
-            <ul>
-              <li>Up to 500 products</li>
-              <li>2 user accounts</li>
-              <li>Basic reporting</li>
-              <li>Email support</li>
-            </ul>
-            <button className="price-btn">Choose Plan</button>
-          </div>
-          <div className="pricing-card featured">
-            <div className="most-popular">Most Popular</div>
-            <h3>Business</h3>
-            <div className="price">
-              $79<span>/month</span>
-            </div>
-            <ul>
-              <li>Up to 5,000 products</li>
-              <li>10 user accounts</li>
-              <li>Advanced reporting</li>
-              <li>Priority support</li>
-            </ul>
-            <button className="price-btn">Choose Plan</button>
-          </div>
-          <div className="pricing-card">
-            <h3>Enterprise</h3>
-            <div className="price">
-              $199<span>/month</span>
-            </div>
-            <ul>
-              <li>Unlimited products</li>
-              <li>Unlimited users</li>
-              <li>Custom reporting</li>
-              <li>24/7 dedicated support</li>
-            </ul>
-            <button className="price-btn">Choose Plan</button>
-          </div>
-        </div>
+        <Pricing />
       </section>
 
       <section id="contact" className="contact">
-        <h2>Ready to Get Started?</h2>
-        <p>
-          Contact our team for a free demo or to learn more about BuySell Nexus
-        </p>
-        <form className="contact-form">
-          <input type="text" placeholder="Your Name" />
-          <input type="email" placeholder="Email Address" />
-          <textarea placeholder="Your Message"></textarea>
-          <button type="submit" className="submit-btn">
-            Send Message
-          </button>
-        </form>
+        <GetStartForm />
       </section>
-
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-logo">
-            <h2>BuySell Nexus</h2>
-            <p>Simplifying business management since 2025</p>
-          </div>
-          <div className="footer-links">
-            <div className="footer-column">
-              <h3>Product</h3>
-              <a href="#features">Features</a>
-              <a href="#pricing">Pricing</a>
-              <a href="#testimonials">Testimonials</a>
-            </div>
-            <div className="footer-column">
-              <h3>Company</h3>
-              <a href="#about">About Us</a>
-              <a href="#careers">Careers</a>
-              <a href="#blog">Blog</a>
-            </div>
-            <div className="footer-column">
-              <h3>Support</h3>
-              <a href="#help">Help Center</a>
-              <a href="#contact">Contact Us</a>
-              <a href="#faq">FAQ</a>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>&copy; 2025 BuySell Nexus. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

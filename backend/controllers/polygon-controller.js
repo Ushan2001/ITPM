@@ -127,6 +127,8 @@ const getSellersNearBy = async (req, res) => {
         $project: {
           _id: "$sellerDetails._id",
           name: "$sellerDetails.name",
+          email: "$sellerDetails.email",
+          phoneNo: "$sellerDetails.phoneNo",
           profilePic: "$sellerDetails.profilePic",
           location: "$sellerDetails.location",
           address: "$sellerDetails.address",
