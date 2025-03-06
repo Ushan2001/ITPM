@@ -12,7 +12,7 @@ const handleErrors = (res, error) => {
 };
 
 const signUp = async (req, res) => {
-  const { name, email, password, phoneNo, address, type, status } = req.body;
+  const { name, email, password, phoneNo, address, storeName, type, status } = req.body;
 
   const { error } = validateSignup(req.body);
   if (error) {
@@ -36,6 +36,7 @@ const signUp = async (req, res) => {
       phoneNo,
       profilePic,
       address,
+      storeName,
       type,
       location: location
         ? {

@@ -19,6 +19,7 @@ const SignupForm = () => {
   const [phoneNo, setPhoneNo] = useState("");
   const [type, setType] = useState("");
   const [address, setAddress] = useState("");
+  const [storeName, setStoreName] = useState("");
   const [location, setLocation] = useState({
     name: "",
     longitude: null,
@@ -78,6 +79,7 @@ const SignupForm = () => {
     formData.append("phoneNo", phoneNo);
     formData.append("type", type);
     formData.append("address", address);
+    formData.append("storeName", storeName);
 
     if (location.longitude && location.latitude) {
       formData.append("location", JSON.stringify(location));
@@ -112,6 +114,7 @@ const SignupForm = () => {
       setPhoneNo("");
       setType("");
       setAddress("");
+      setStoreName("");
       setLocation({ name: "", longitude: null, latitude: null });
       setMapCenter({ lat: 6.9271, lng: 79.8612 });
       setProfilePic(null);
@@ -215,6 +218,18 @@ const SignupForm = () => {
                 placeholder="Enter your address"
               />
             </div>
+            {type === "seller" && (
+              <div className="p-field animate-input">
+                <label htmlFor="storeName">Store Name*</label>
+                <InputText
+                  id="storeName"
+                  value={storeName}
+                  onChange={(e) => setStoreName(e.target.value)}
+                  placeholder="Enter store name"
+                  required
+                />
+              </div>
+            )}
           </div>
 
           <Divider />

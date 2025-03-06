@@ -31,6 +31,9 @@ const userSchema = new Schema(
     address: {
       type: String,
     },
+    storeName: {
+      type: String,
+    },
     location: {
       name: {
         type: String,
