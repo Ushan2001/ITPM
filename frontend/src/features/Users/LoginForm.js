@@ -52,6 +52,16 @@ const AdminLoginForm = ({ admin }) => {
         throw new Error("Incomplete response data");
       }
 
+      if (data.userData.status === "inactive") {
+        toast.current.show({
+          severity: "warn",
+          summary: "Account Inactive",
+          detail:
+            "Your account is not active. Please contact admin at 0760673035.",
+        });
+        return;
+      }
+
       localStorage.setItem("token", data.token);
       localStorage.setItem("userType", data.userData.type);
 
@@ -64,7 +74,7 @@ const AdminLoginForm = ({ admin }) => {
       if (data.userData.type === "admin") {
         navigate("/admin-dashboard");
       } else if (data.userData.type === "buyer") {
-        navigate("/buyer-dashboard");
+        navigate("/");
       } else if (data.userData.type === "seller") {
         navigate("/seller-dashboard");
       }
@@ -212,7 +222,7 @@ const AdminLoginForm = ({ admin }) => {
       <Dialog
         header="Signup Form"
         visible={visible}
-        style={{ width: "80%" }}
+        style={{ width: "85%" }}
         onHide={() => setVisible(false)}
       >
         <SignupForm />

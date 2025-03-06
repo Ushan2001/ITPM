@@ -13,6 +13,14 @@ import { createStore } from "redux";
 import rootReducer from "../store/reducers";
 import LoginForm from "../features/Users/LoginForm";
 import Profile from "../features/Users/Profile";
+import ActiveUsers from "../features/Admin/UsersList/ActiveUsers";
+import InactiveUsers from "../features/Admin/UsersList/InactiveUsers";
+import MapComponent from "../features/Admin/Polygon/MarkPolygon";
+import SellerComponent from "../features/Admin/Sellers/SellerComponent";
+import MapComponentMark from "../features/Admin/Polygon/MapComponent";
+import LandingPage from "../pages/LandingPage";
+import SignupForm from "../features/Users/SignupForm";
+import ByuerProfile from "../features/Buyer/Profile/Profile";
 
 const store = createStore(rootReducer);
 
@@ -35,7 +43,10 @@ const App = () => {
 
 const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/";
+  const isLandingPage = location.pathname === "/";
+  const isLoginPage = location.pathname === "/login";
+  const isSignUpPage = location.pathname === "/signup";
+  const isProfilePage = location.pathname === "/profile";
   const largeScreen = window.innerWidth >= 1920;
   const userType = localStorage.getItem("userType");
 
@@ -43,25 +54,36 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
     <div
       style={{
         marginLeft:
-          panelMenuVisible && !isLoginPage && isLoggedIn ? "250px" : "0",
+          panelMenuVisible &&
+          !isLandingPage &&
+          !isSignUpPage &&
+          !isLoginPage &&
+          !isProfilePage &&
+          isLoggedIn
+            ? "250px"
+            : "0",
         paddingTop: "60px",
       }}
     >
-      {isLoggedIn && !isLoginPage && (
-        <>
-          {userType === "admin" ? (
-            <AdminAppMenu
-              panelMenuVisible={panelMenuVisible}
-              setPanelMenuVisible={setPanelMenuVisible}
-            />
-          ) : userType === "seller" ? (
-            <SellerAppMenu
-              panelMenuVisible={panelMenuVisible}
-              setPanelMenuVisible={setPanelMenuVisible}
-            />
-          ) : null}
-        </>
-      )}
+      {isLoggedIn &&
+        !isLandingPage &&
+        !isLoginPage &&
+        !isSignUpPage &&
+        !isProfilePage && (
+          <>
+            {userType === "admin" ? (
+              <AdminAppMenu
+                panelMenuVisible={panelMenuVisible}
+                setPanelMenuVisible={setPanelMenuVisible}
+              />
+            ) : userType === "seller" ? (
+              <SellerAppMenu
+                panelMenuVisible={panelMenuVisible}
+                setPanelMenuVisible={setPanelMenuVisible}
+              />
+            ) : null}
+          </>
+        )}
       <div
         style={{
           marginLeft: "50px",
@@ -70,10 +92,33 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
         }}
       >
         <Routes>
-          <Route path="/" element={<LoginForm />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/profile" element={<ByuerProfile />} />
           <Route
             path="/me"
             element={isLoggedIn ? <Profile /> : <LoginForm />}
+          />
+          <Route
+            path="/active-users"
+            element={isLoggedIn ? <ActiveUsers /> : <LoginForm />}
+          />
+          <Route
+            path="/inactive-users"
+            element={isLoggedIn ? <InactiveUsers /> : <LoginForm />}
+          />
+          <Route
+            path="/polygon"
+            element={isLoggedIn ? <MapComponent /> : <LoginForm />}
+          />
+          <Route
+            path="/sellers"
+            element={isLoggedIn ? <SellerComponent /> : <LoginForm />}
+          />
+          <Route
+            path="/get-polygon"
+            element={isLoggedIn ? <MapComponentMark /> : <LoginForm />}
           />
         </Routes>
       </div>
