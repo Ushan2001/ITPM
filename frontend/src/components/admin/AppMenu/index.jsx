@@ -78,6 +78,18 @@ const AppMenu = () => {
       ],
     },
     {
+      label: "Sellers",
+      icon: "pi pi-users",
+      expanded: false,
+      items: [
+        {
+          label: "Seller List",
+          icon: "pi pi-list-check",
+          command: () => navigate("/sellers"),
+        },
+      ],
+    },
+    {
       label: "Settings",
       icon: "pi pi-cog",
       expanded: false,
@@ -85,7 +97,7 @@ const AppMenu = () => {
         {
           label: "Add Polygon",
           icon: "pi pi-map",
-          command: () => navigate("/plygon"),
+          command: () => navigate("/polygon"),
         },
       ],
     },

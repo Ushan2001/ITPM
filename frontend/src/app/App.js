@@ -16,6 +16,8 @@ import Profile from "../features/Users/Profile";
 import ActiveUsers from "../features/Admin/UsersList/ActiveUsers";
 import InactiveUsers from "../features/Admin/UsersList/InactiveUsers";
 import MapComponent from "../features/Admin/Polygon/MarkPolygon";
+import SellerComponent from "../features/Admin/Sellers/SellerComponent";
+import MapComponentMark from "../features/Admin/Polygon/MapComponent";
 
 const store = createStore(rootReducer);
 
@@ -87,8 +89,16 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
             element={isLoggedIn ? <InactiveUsers /> : <LoginForm />}
           />
           <Route
-            path="/plygon"
+            path="/polygon"
             element={isLoggedIn ? <MapComponent /> : <LoginForm />}
+          />
+          <Route
+            path="/sellers"
+            element={isLoggedIn ? <SellerComponent /> : <LoginForm />}
+          />
+           <Route
+            path="/get-polygon"
+            element={isLoggedIn ? <MapComponentMark /> : <LoginForm />}
           />
         </Routes>
       </div>

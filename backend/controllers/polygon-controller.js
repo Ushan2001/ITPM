@@ -1,5 +1,6 @@
 const Polygon = require("../models/Polygon");
 const User = require("../models/User");
+const AvailableLocation = require("../models/AvailableLocation");
 const { extractUserId } = require("../helpers/auth-middleware");
 const turf = require("@turf/turf");
 
@@ -56,19 +57,18 @@ const getSellersNearBy = async (req, res) => {
 
   try {
     const buyer = await User.findById(buyerId);
-    if (!buyer || !buyer.location) {
+    if (
+      !buyer ||
+      !buyer.location ||
+      !buyer.location.longitude ||
+      !buyer.location.latitude
+    ) {
       return res.status(400).json({
-        message: "Your location not found, Please update.",
+        message: "Your location is not found, please update it.",
       });
     }
 
     const { longitude, latitude } = buyer.location;
-
-    if (longitude === undefined || latitude === undefined) {
-      return res
-        .status(400)
-        .json({ message: "Location data is missing, Please update." });
-    }
 
     const polygons = await Polygon.find().select("name coordinates");
 
@@ -77,9 +77,11 @@ const getSellersNearBy = async (req, res) => {
         coord.lng,
         coord.lat,
       ]);
+
       if (
-        coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
-        coordinates[0][1] !== coordinates[coordinates.length - 1][1]
+        coordinates.length > 0 &&
+        (coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
+          coordinates[0][1] !== coordinates[coordinates.length - 1][1])
       ) {
         coordinates.push(coordinates[0]);
       }
@@ -98,11 +100,10 @@ const getSellersNearBy = async (req, res) => {
 
     const polygonIds = containingPolygons.map((polygon) => polygon._id);
 
-    const pipeline = [
+    const sellers = await AvailableLocation.aggregate([
       {
         $match: {
           locations: { $in: polygonIds },
-          type: "seller",
         },
       },
       {
@@ -117,29 +118,26 @@ const getSellersNearBy = async (req, res) => {
         $unwind: "$sellerDetails",
       },
       {
+        $match: {
+          "sellerDetails.type": "seller",
+          "sellerDetails.status": "active",
+        },
+      },
+      {
         $project: {
-          userId: "$sellerDetails._id",
+          _id: "$sellerDetails._id",
           name: "$sellerDetails.name",
           profilePic: "$sellerDetails.profilePic",
           location: "$sellerDetails.location",
         },
       },
-    ];
+    ]);
 
-    const availableSellers = await AvailableLocation.aggregate(pipeline);
-
-    if (availableSellers.length === 0) {
+    if (sellers.length === 0) {
       return res.status(404).json({ message: "No nearby sellers found." });
     }
 
-    return res.status(200).json({
-      sellers: availableSellers.map((seller) => ({
-        _id: seller.userId,
-        name: seller.name,
-        profilePic: seller.profilePic,
-        location: seller.location,
-      })),
-    });
+    return res.status(200).json({ sellers });
   } catch (error) {
     return res.status(500).json({
       message: "Error finding nearby sellers!",

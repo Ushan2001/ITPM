@@ -269,6 +269,19 @@ const changePassword = async (req, res) => {
   }
 };
 
+const getActiveSellers = async (req, res) => {
+  try {
+    const activeSellers = await User.find({
+      type: "seller",
+      status: "active",
+    }).select("-password -createdAt -updatedAt -__v");
+
+    return res.status(200).json({ sellers: activeSellers });
+  } catch (error) {
+    return handleErrors(res, error);
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
@@ -279,5 +292,6 @@ module.exports = {
   updateStatus,
   getActiveUsers,
   getInactiveUsers,
-  changePassword
+  changePassword,
+  getActiveSellers,
 };

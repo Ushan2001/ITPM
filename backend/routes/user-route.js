@@ -11,6 +11,7 @@ const {
   getInactiveUsers,
   deleteProfileById,
   changePassword,
+  getActiveSellers,
 } = require("../controllers/user-controller");
 const {
   uploadProfilePicture,
@@ -27,5 +28,6 @@ router.delete("/:id", verifyToken, deleteProfileById);
 router.get("/active", verifyToken, getActiveUsers);
 router.get("/inactive", verifyToken, getInactiveUsers);
 router.put("/change-password", verifyToken, changePassword);
+router.get("/active-sellers", verifyToken, getActiveSellers);
 
 module.exports = router;
