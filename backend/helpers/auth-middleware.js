@@ -21,6 +21,7 @@ const validateSignup = (data) => {
     phoneNo: Joi.string().optional(),
     profilePic: Joi.string().optional(),
     address: Joi.string().optional(),
+    storeName: Joi.string().optional(),
     location: Joi.string().optional(),
     type: Joi.string().valid("admin", "seller", "buyer").optional(),
     status: Joi.string().valid("active", "inactive").optional(),

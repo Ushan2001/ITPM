@@ -129,6 +129,8 @@ const getSellersNearBy = async (req, res) => {
           name: "$sellerDetails.name",
           profilePic: "$sellerDetails.profilePic",
           location: "$sellerDetails.location",
+          address: "$sellerDetails.address",
+          storeName: "$sellerDetails.storeName",
         },
       },
     ]);
