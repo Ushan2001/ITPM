@@ -74,7 +74,7 @@ const AdminLoginForm = ({ admin }) => {
       if (data.userData.type === "admin") {
         navigate("/admin-dashboard");
       } else if (data.userData.type === "buyer") {
-        navigate("/buyer-dashboard");
+        navigate("/");
       } else if (data.userData.type === "seller") {
         navigate("/seller-dashboard");
       }
