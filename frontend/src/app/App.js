@@ -21,6 +21,8 @@ import MapComponentMark from "../features/Admin/Polygon/MapComponent";
 import LandingPage from "../pages/LandingPage";
 import SignupForm from "../features/Users/SignupForm";
 import ByuerProfile from "../features/Buyer/Profile/Profile";
+import SellersList from "../features/Buyer/SellersList/SellersList";
+import AdminDashboard from "../features/Admin/Dashboard/Dashboard"
 
 const store = createStore(rootReducer);
 
@@ -47,6 +49,7 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
   const isLoginPage = location.pathname === "/login";
   const isSignUpPage = location.pathname === "/signup";
   const isProfilePage = location.pathname === "/profile";
+  const isSellerListPage = location.pathname === "/sellers-list";
   const largeScreen = window.innerWidth >= 1920;
   const userType = localStorage.getItem("userType");
 
@@ -59,6 +62,7 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           !isSignUpPage &&
           !isLoginPage &&
           !isProfilePage &&
+          !isSellerListPage &&
           isLoggedIn
             ? "250px"
             : "0",
@@ -69,6 +73,7 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
         !isLandingPage &&
         !isLoginPage &&
         !isSignUpPage &&
+        !isSellerListPage &&
         !isProfilePage && (
           <>
             {userType === "admin" ? (
@@ -96,6 +101,7 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/profile" element={<ByuerProfile />} />
+          <Route path="/sellers-list" element={<SellersList />} />
           <Route
             path="/me"
             element={isLoggedIn ? <Profile /> : <LoginForm />}
@@ -119,6 +125,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route
             path="/get-polygon"
             element={isLoggedIn ? <MapComponentMark /> : <LoginForm />}
+          />
+           <Route
+            path="/admin-dashboard"
+            element={isLoggedIn ? <AdminDashboard /> : <LoginForm />}
           />
         </Routes>
       </div>

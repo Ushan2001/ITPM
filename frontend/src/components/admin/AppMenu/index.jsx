@@ -51,14 +51,14 @@ const AppMenu = () => {
   };
 
   const handleLogo = () => {
-    navigate("/dashboard");
+    navigate("/admin-dashboard");
   };
 
   const menuItems = [
     {
       label: "Dashboard",
       icon: "pi pi-chart-line",
-      command: () => navigate("/dashboard"),
+      command: () => navigate("/admin-dashboard"),
     },
     {
       label: "Users",
