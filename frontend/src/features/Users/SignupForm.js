@@ -20,7 +20,7 @@ const SignupForm = () => {
   const [phoneNo, setPhoneNo] = useState("");
   const [type, setType] = useState("");
   const [address, setAddress] = useState("");
-  const [storeName, setStoreName] = useState("");
+  const [storeName, setStoreName] = useState(null);
   const [location, setLocation] = useState({
     name: "",
     longitude: null,
@@ -115,7 +115,7 @@ const SignupForm = () => {
       setPhoneNo("");
       setType("");
       setAddress("");
-      setStoreName("");
+      setStoreName(null);
       setLocation({ name: "", longitude: null, latitude: null });
       setMapCenter({ lat: 6.9271, lng: 79.8612 });
       setProfilePic(null);
@@ -229,7 +229,6 @@ const SignupForm = () => {
                     value={storeName}
                     onChange={(e) => setStoreName(e.target.value)}
                     placeholder="Enter store name"
-                    required
                   />
                 </div>
               )}
