@@ -22,7 +22,9 @@ import LandingPage from "../pages/LandingPage";
 import SignupForm from "../features/Users/SignupForm";
 import ByuerProfile from "../features/Buyer/Profile/Profile";
 import SellersList from "../features/Buyer/SellersList/SellersList";
-import AdminDashboard from "../features/Admin/Dashboard/Dashboard"
+import AdminDashboard from "../features/Admin/Dashboard/Dashboard";
+import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
+import SupplierComponent from "../features/Seller/Suppliers/SupplierComponent";
 
 const store = createStore(rootReducer);
 
@@ -126,9 +128,17 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
             path="/get-polygon"
             element={isLoggedIn ? <MapComponentMark /> : <LoginForm />}
           />
-           <Route
+          <Route
             path="/admin-dashboard"
             element={isLoggedIn ? <AdminDashboard /> : <LoginForm />}
+          />
+          <Route
+            path="/add-supplier"
+            element={isLoggedIn ? <AddSupplier /> : <LoginForm />}
+          />
+          <Route
+            path="/suppliers"
+            element={isLoggedIn ? <SupplierComponent /> : <LoginForm />}
           />
         </Routes>
       </div>

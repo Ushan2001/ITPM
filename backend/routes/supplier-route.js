@@ -5,7 +5,8 @@ const {
   getAllSupplier,
   getSupplierById,
   updateSupplier,
-  deleteSupplier
+  deleteSupplier,
+  getSupplierBySellerId,
 } = require("../controllers/supplier-controller");
 const { verifyToken } = require("../helpers/auth-middleware.js");
 
@@ -13,6 +14,7 @@ router.use(verifyToken);
 
 router.post("/", addSupplier);
 router.get("/", getAllSupplier);
+router.get("/seller-by-id", getSupplierBySellerId);
 router.get("/:id", getSupplierById);
 router.put("/:id", updateSupplier);
 router.delete("/:id", deleteSupplier);
