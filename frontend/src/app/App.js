@@ -25,6 +25,7 @@ import SellersList from "../features/Buyer/SellersList/SellersList";
 import AdminDashboard from "../features/Admin/Dashboard/Dashboard";
 import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
 import SupplierComponent from "../features/Seller/Suppliers/SupplierComponent";
+import EditSupplier from "../features/Seller/Suppliers/EditSupplier";
 
 const store = createStore(rootReducer);
 
@@ -139,6 +140,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route
             path="/suppliers"
             element={isLoggedIn ? <SupplierComponent /> : <LoginForm />}
+          />
+          <Route
+            path="/edit-supplier/:id"
+            element={isLoggedIn ? <EditSupplier /> : <LoginForm />}
           />
         </Routes>
       </div>
