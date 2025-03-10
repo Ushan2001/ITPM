@@ -101,6 +101,28 @@ const getSupplierById = async (req, res) => {
   }
 };
 
+const getSupplierBySellerId = async (req, res) => {
+  const sellerId = extractUserId(req);
+
+  try {
+    const supplier = await Supplier.find({ addedBy: sellerId })
+      .populate("addedBy", "name")
+      .populate({
+        path: "products",
+        select: "-supplierId -createdAt -updatedAt -__v",
+        populate: { path: "addedBy", select: "name" },
+      })
+      .select("-createdAt -updatedAt -__v");
+    if (!supplier) {
+      return res.status(404).json({ message: "Supplier not found!" });
+    }
+
+    return res.status(200).json(supplier);
+  } catch (error) {
+    return handleErrors(res, error, "Fetching supplier details failed!");
+  }
+};
+
 const updateSupplier = async (req, res) => {
   const supplierId = req.params.id;
   const { name, email, phoneNo, address, status } = req.body;
@@ -165,4 +187,5 @@ module.exports = {
   getSupplierById,
   updateSupplier,
   deleteSupplier,
+  getSupplierBySellerId,
 };
