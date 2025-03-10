@@ -97,13 +97,15 @@ export default function InactiveUsers() {
 
   const actionBodyTemplate = (rowData) => {
     return (
-      <div className="flex gap-2">
+      <div
+        className="flex gap-2"
+        style={{ display: "inline-flex", alignItems: "center" }}
+      >
         <Button
           icon="pi pi-check"
           className="p-button-success p-button-rounded"
           onClick={() => approveUser(rowData._id)}
           tooltip="Approve User"
-          
         />
         &nbsp;
         <Button
@@ -119,14 +121,17 @@ export default function InactiveUsers() {
   const approveUser = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${config.apiUrl}/api/v1/user/activate/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: "active", userId: id }),
-      });
+      const response = await fetch(
+        `${config.apiUrl}/api/v1/user/activate/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "active", userId: id }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to approve user");

@@ -256,7 +256,7 @@ export default function AddSupplier() {
           label="Cancel"
           icon="pi pi-times"
           className="p-button-danger"
-          onClick={() => navigate("")}
+          onClick={() => navigate("/suppliers")}
           style={{
             marginRight: "10px",
             width: "12%",

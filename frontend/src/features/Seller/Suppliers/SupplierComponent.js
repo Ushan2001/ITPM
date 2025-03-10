@@ -52,7 +52,7 @@ export default function SupplierComponent() {
   };
 
   const handleEdit = (id) => {
-    navigate(`/edit-category/${id}`);
+    navigate(`/edit-supplier/${id}`);
   };
 
   const handleDelete = (id) => {
