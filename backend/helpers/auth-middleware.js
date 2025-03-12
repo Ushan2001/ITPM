@@ -50,7 +50,7 @@ const verifyPassword = (plainPassword, hashedPassword) => {
 
 const generateToken = (userId, email) => {
   return jwt.sign({ userId, email }, process.env.JWT_SECRET, {
-    expiresIn: "24h",
+    expiresIn: "5h",
   });
 };
 

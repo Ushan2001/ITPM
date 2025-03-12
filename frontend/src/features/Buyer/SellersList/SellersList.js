@@ -6,7 +6,6 @@ import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
 import { Skeleton } from "primereact/skeleton";
 import { Toast } from "primereact/toast";
-import { ProgressSpinner } from "primereact/progressspinner";
 import config from "../../../config";
 import "./style.css";
 import NavBar from "../../../pages/NavBar";
@@ -16,6 +15,7 @@ const SellersList = () => {
   const [loading, setLoading] = useState(true);
   const [isNearby, setIsNearby] = useState(false);
   const [loadingNearby, setLoadingNearby] = useState(false);
+  const [showMapLoading, setShowMapLoading] = useState(false);
   const toast = React.useRef(null);
 
   useEffect(() => {
@@ -61,6 +61,7 @@ const SellersList = () => {
   const fetchNearbySellers = async () => {
     try {
       setLoadingNearby(true);
+
       const token = localStorage.getItem("token");
       const response = await fetch(
         `${config.apiUrl}/api/v1/polygon/sellers-near-by`,
@@ -77,6 +78,13 @@ const SellersList = () => {
       }
 
       const data = await response.json();
+
+      setShowMapLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 2500));
+
+      setShowMapLoading(false);
+
       setSellers(data.sellers);
       setIsNearby(true);
 
@@ -90,6 +98,9 @@ const SellersList = () => {
       }
     } catch (error) {
       console.error("Error fetching nearby sellers:", error);
+
+      setShowMapLoading(false);
+
       if (toast.current) {
         toast.current.show({
           severity: "error",
@@ -237,6 +248,22 @@ const SellersList = () => {
         <NavBar />
       </div>
 
+      {showMapLoading && (
+        <div className="map-loading-overlay">
+          <div className="map-loading-container">
+            <div className="map-icon-large">
+              <i className="pi pi-map"></i>
+            </div>
+            <div className="ripple-container">
+              <div className="ripple"></div>
+              <div className="ripple"></div>
+              <div className="ripple"></div>
+            </div>
+            <p className="map-loading-text">Searching for nearby sellers...</p>
+          </div>
+        </div>
+      )}
+
       <div className="sellers-container">
         <div className="sellers-header">
           <h1 className="sellers-title">
@@ -255,17 +282,17 @@ const SellersList = () => {
               <Button
                 label="Near Me"
                 icon="pi pi-map-marker"
-                className="p-button-outlined nearby-button"
+                className={`p-button-outlined nearby-button ${
+                  loadingNearby ? "loading" : ""
+                }`}
                 onClick={fetchNearbySellers}
                 disabled={loadingNearby}
               >
-                {loadingNearby && (
-                  <ProgressSpinner
-                    style={{ width: "20px", height: "20px" }}
-                    strokeWidth="8"
-                    fill="var(--surface-ground)"
-                    animationDuration=".5s"
-                  />
+                {loadingNearby && !showMapLoading && (
+                  <div className="map-icon-wrapper">
+                    <i className="pi pi-map map-loading-icon"></i>
+                    <div className="map-pulse"></div>
+                  </div>
                 )}
               </Button>
             )}
