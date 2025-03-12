@@ -68,7 +68,7 @@ const AppMenu = () => {
         {
           label: "Supplier Dashboard",
           icon: "pi pi-qrcode",
-          command: () => navigate(""),
+          command: () => navigate("/supplier-dashboard"),
         },
         {
           label: "Add Supplier",

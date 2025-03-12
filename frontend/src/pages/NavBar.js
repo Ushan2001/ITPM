@@ -108,7 +108,7 @@ export default function NavBar() {
               onClick={handleProfile}
               style={{ cursor: "pointer" }}
             >
-              Hi! {user.name || "Guest"}
+              Hi! {user.name ? user.name.split(" ")[0] : "Guest"}
             </span>
           </div>
           <>
