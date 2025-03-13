@@ -219,13 +219,20 @@ export default function SupplierProductComponent({ selectedSupplierId }) {
             </div>
             <div className="p-field">
               <label>Price</label>
-              <InputText
-                value={selectedProduct.price}
+              <InputNumber
+                value={selectedProduct?.price ?? 0}
                 onValueChange={(e) =>
-                  setSelectedProduct({ ...selectedProduct, price: e.value })
+                  setSelectedProduct({
+                    ...selectedProduct,
+                    price: e.value ?? 0,
+                  })
                 }
+                mode="currency"
+                currency="LKR"
+                locale="en-US"
               />
             </div>
+
             <div className="p-field">
               <label>Quantity</label>
               <InputNumber
