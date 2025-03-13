@@ -198,6 +198,7 @@ export default function AddSupplierProduct({
               <InputText
                 id="price"
                 name="price"
+                type="number"
                 value={formData.price}
                 onChange={handleInputChange}
                 required
