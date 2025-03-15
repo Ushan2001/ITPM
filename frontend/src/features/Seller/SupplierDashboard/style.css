@@ -1,0 +1,146 @@
+.dashboard-container {
+  background-color: #f8f9fa;
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.supplier-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.supplier-header h1 {
+  font-size: 1.8rem;
+  color: #343a40;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .supplier-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .supplier-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+.topic-section {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.topic-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.topic-card {
+  animation: fadeIn 1s ease-in-out;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  flex: 1 1 250px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.topic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.topic-card h3 {
+  margin: 10px 0;
+}
+
+.icon {
+  font-size: 2rem;
+  color: #4bc0c0;
+  margin-bottom: 10px;
+}
+
+.graph-section {
+  margin-top: 20px;
+}
+
+.dashboard-charts {
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.chart-card {
+  animation: fadeIn 1s ease-in-out;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.supplier-section {
+  margin-top: 20px;
+}
+
+.supplier-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.supplier-card {
+  animation: fadeIn 1s ease-in-out;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.supplier-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.supplier-details {
+  padding: 1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .topic-cards,
+  .dashboard-charts,
+  .supplier-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Add this media query */
+@media (max-width: 768px) {
+  .dashboard-charts {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+  }
+}

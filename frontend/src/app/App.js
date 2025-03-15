@@ -22,7 +22,11 @@ import LandingPage from "../pages/LandingPage";
 import SignupForm from "../features/Users/SignupForm";
 import ByuerProfile from "../features/Buyer/Profile/Profile";
 import SellersList from "../features/Buyer/SellersList/SellersList";
-import AdminDashboard from "../features/Admin/Dashboard/Dashboard"
+import AdminDashboard from "../features/Admin/Dashboard/Dashboard";
+import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
+import SupplierComponent from "../features/Seller/Suppliers/SupplierComponent";
+import EditSupplier from "../features/Seller/Suppliers/EditSupplier";
+import SupplierDashboard from "../features/Seller/SupplierDashboard/Dashboard";
 
 const store = createStore(rootReducer);
 
@@ -126,9 +130,25 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
             path="/get-polygon"
             element={isLoggedIn ? <MapComponentMark /> : <LoginForm />}
           />
-           <Route
+          <Route
             path="/admin-dashboard"
             element={isLoggedIn ? <AdminDashboard /> : <LoginForm />}
+          />
+          <Route
+            path="/add-supplier"
+            element={isLoggedIn ? <AddSupplier /> : <LoginForm />}
+          />
+          <Route
+            path="/suppliers"
+            element={isLoggedIn ? <SupplierComponent /> : <LoginForm />}
+          />
+          <Route
+            path="/edit-supplier/:id"
+            element={isLoggedIn ? <EditSupplier /> : <LoginForm />}
+          />
+          <Route
+            path="/supplier-dashboard"
+            element={isLoggedIn ? <SupplierDashboard /> : <LoginForm />}
           />
         </Routes>
       </div>
