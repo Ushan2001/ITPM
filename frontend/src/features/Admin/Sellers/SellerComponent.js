@@ -87,6 +87,12 @@ export default function SellerComponent() {
     );
   };
 
+  const handleSellerProfile = (rowData) => {
+    navigate("/seller-profile", {
+      state: { sellerId: rowData._id, sellerData: rowData },
+    });
+  };
+
   return (
     <div>
       <div className="user-management-container">
@@ -116,7 +122,22 @@ export default function SellerComponent() {
               header="Profile Picture"
               body={imageBodyTemplate}
             />
-            <Column field="name" header="Name" sortable />
+            <Column
+              field="name"
+              header="Name"
+              sortable
+              body={(rowData) => (
+                <span
+                  style={{
+                    cursor: "pointer",
+                    color: "#007bff",
+                  }}
+                  onClick={() => handleSellerProfile(rowData)}
+                >
+                  {rowData.name}
+                </span>
+              )}
+            />
             <Column field="email" header="Email" />
             <Column field="phoneNo" header="Phone Number" />
             <Column field="address" header="Address" />

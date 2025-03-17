@@ -27,6 +27,7 @@ import LoginForm from "../features/Users/LoginForm";
 import Profile from "../features/Users/Profile";
 import SignupForm from "../features/Users/SignupForm";
 import LandingPage from "../pages/LandingPage";
+import SellerProfile from "../features/Admin/SellerProfile/SellerProfile";
 import rootReducer from "../store/reducers";
 
 const store = createStore(rootReducer);
@@ -150,6 +151,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route
             path="/supplier-dashboard"
             element={isLoggedIn ? <SupplierDashboard /> : <LoginForm />}
+          />
+          <Route
+            path="/seller-profile"
+            element={isLoggedIn ? <SellerProfile /> : <LoginForm />}
           />
           <Route
             path="/add-product"
