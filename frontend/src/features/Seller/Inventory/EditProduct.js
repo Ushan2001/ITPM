@@ -4,6 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Skeleton } from "primereact/skeleton";
 import { Toast } from "primereact/toast";
+import { FileUpload } from "primereact/fileupload";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import config from "../../../config";
@@ -16,10 +17,11 @@ export default function EditProduct() {
     price: "",
     categoryType: "",
     quantity: "",
-    status: "",
-    productPic: "active",
+    status: "active",
+    productPic: null,
   });
 
+  const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const toast = useRef(null);
   const navigate = useNavigate();
@@ -35,7 +37,6 @@ export default function EditProduct() {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
@@ -43,6 +44,9 @@ export default function EditProduct() {
       }
       const data = await response.json();
       setFormData(data);
+      setImagePreview(
+        `${config.apiUrl}/api/v1/uploads/image/product/${data.productPic}`
+      );
       setLoading(false);
     } catch (error) {
       console.error("Error to fetch supplier data", error);
@@ -53,6 +57,15 @@ export default function EditProduct() {
       });
       setLoading(false);
     }
+  };
+
+  const onFileSelect = (e) => {
+    const file = e.files[0];
+    setFormData((prevData) => ({
+      ...prevData,
+      productPic: file,
+    }));
+    setImagePreview(URL.createObjectURL(file));
   };
 
   const handleChange = (e) => {
@@ -93,13 +106,26 @@ export default function EditProduct() {
 
     try {
       const token = localStorage.getItem("token");
+
+      const formDataToSend = new FormData();
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("description", formData.description);
+      formDataToSend.append("price", formData.price);
+      formDataToSend.append("categoryType", formData.categoryType);
+      formDataToSend.append("quantity", formData.quantity);
+      formDataToSend.append("status", formData.status);
+
+      if (formData.productPic instanceof File) {
+        formDataToSend.append("productPic", formData.productPic);
+      }
+
       const response = await fetch(`${config.apiUrl}/api/v1/inventory/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+         
         },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
       const data = await response.json();
 
@@ -347,6 +373,32 @@ export default function EditProduct() {
                   />
                 </div>
               </div>
+            </div>
+
+            <div className="p-field upload-field">
+              <label htmlFor="productPic">Product Picture</label>
+              {imagePreview && (
+                <div>
+                  <img
+                    src={imagePreview}
+                    alt="Product"
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      marginBottom: "10px",
+                    }}
+                  />
+                </div>
+              )}
+              <FileUpload
+                name="productPic"
+                accept="image/*"
+                customUpload
+                auto
+                uploadHandler={onFileSelect}
+                chooseLabel="Select Image"
+                className="animate-upload"
+              />
             </div>
             <div
               className="p-field"

@@ -150,12 +150,13 @@ const deleteProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const productId = req.params.id;
-  const { title, description, price, categoryType, quantity,productPic, status } = req.body;
+  const { title, description, price, categoryType, quantity, status } =
+    req.body;
 
   try {
     const existingProduct = await Inventory.findById(productId);
     if (!existingProduct) {
-      return res.status(404).json({ message: "Supplier not found!" });
+      return res.status(404).json({ message: "Product not found!" });
     }
 
     if (status && !["active", "inactive"].includes(status)) {
@@ -164,9 +165,26 @@ const updateProduct = async (req, res) => {
       });
     }
 
+    const productPic = req.file
+      ? req.file.filename
+      : existingProduct.productPic;
+
+    const updatedFields = {
+      title,
+      description,
+      price,
+      categoryType,
+      quantity,
+      status,
+      productPic,
+    };
+    Object.keys(updatedFields).forEach((key) => {
+      if (updatedFields[key] === undefined) delete updatedFields[key];
+    });
+
     const updatedProduct = await Inventory.findByIdAndUpdate(
       productId,
-      { title, description, price, categoryType,quantity,productPic, status },
+      updatedFields,
       { new: true, runValidators: true }
     );
 
@@ -181,6 +199,7 @@ const updateProduct = async (req, res) => {
     });
   }
 };
+
 module.exports = {
   addProduct,
   getAllProduct,
