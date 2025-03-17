@@ -45,6 +45,12 @@ const userSchema = new Schema(
         type: Number,
       },
     },
+    products: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Inventory",
+      },
+    ],
     status: {
       type: String,
       enum: ["active", "inactive"],
