@@ -1,14 +1,14 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { PanelMenu } from "primereact/panelmenu";
-import { Menubar } from "primereact/menubar";
-import { useDispatch } from "react-redux";
-import { logout } from "../../../store/actions";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { Toast } from "primereact/toast";
-import logo from "../../../assests/sidebar.png";
+import { Menubar } from "primereact/menubar";
+import { PanelMenu } from "primereact/panelmenu";
 import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
+import { Toast } from "primereact/toast";
+import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import logo from "../../../assests/sidebar.png";
+import { logout } from "../../../store/actions";
 
 const AppMenu = () => {
   const dispatch = useDispatch();
@@ -79,6 +79,23 @@ const AppMenu = () => {
           label: "Supplier List",
           icon: "pi pi-list-check",
           command: () => navigate("/suppliers"),
+        },
+      ],
+    },
+    {
+      label: "Inventory",
+      icon: "pi pi-users",
+      expanded: false,
+      items: [
+        {
+          label: "Add Product",
+          icon: "pi pi-plus-circle",
+          command: () => navigate("/add-product"),
+        },
+        {
+          label: "Product List",
+          icon: "pi pi-list-check",
+          command: () => navigate("/products"),
         },
       ],
     },

@@ -1,32 +1,32 @@
 import React, { useState } from "react";
+import { Provider, useSelector } from "react-redux";
 import {
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
   useLocation,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { createStore } from "redux";
 import AdminAppMenu from "../components/admin/AppMenu";
 import SellerAppMenu from "../components/seller/AppMenu";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import rootReducer from "../store/reducers";
-import LoginForm from "../features/Users/LoginForm";
-import Profile from "../features/Users/Profile";
-import ActiveUsers from "../features/Admin/UsersList/ActiveUsers";
-import InactiveUsers from "../features/Admin/UsersList/InactiveUsers";
+import AdminDashboard from "../features/Admin/Dashboard/Dashboard";
+import MapComponentMark from "../features/Admin/Polygon/MapComponent";
 import MapComponent from "../features/Admin/Polygon/MarkPolygon";
 import SellerComponent from "../features/Admin/Sellers/SellerComponent";
-import MapComponentMark from "../features/Admin/Polygon/MapComponent";
-import LandingPage from "../pages/LandingPage";
-import SignupForm from "../features/Users/SignupForm";
+import ActiveUsers from "../features/Admin/UsersList/ActiveUsers";
+import InactiveUsers from "../features/Admin/UsersList/InactiveUsers";
 import ByuerProfile from "../features/Buyer/Profile/Profile";
 import SellersList from "../features/Buyer/SellersList/SellersList";
-import AdminDashboard from "../features/Admin/Dashboard/Dashboard";
-import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
-import SupplierComponent from "../features/Seller/Suppliers/SupplierComponent";
-import EditSupplier from "../features/Seller/Suppliers/EditSupplier";
+import AddProduct from "../features/Seller/Inventory/AddProduct";
 import SupplierDashboard from "../features/Seller/SupplierDashboard/Dashboard";
+import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
+import EditSupplier from "../features/Seller/Suppliers/EditSupplier";
+import SupplierComponent from "../features/Seller/Suppliers/SupplierComponent";
+import LoginForm from "../features/Users/LoginForm";
+import Profile from "../features/Users/Profile";
+import SignupForm from "../features/Users/SignupForm";
+import LandingPage from "../pages/LandingPage";
+import rootReducer from "../store/reducers";
 
 const store = createStore(rootReducer);
 
@@ -149,6 +149,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route
             path="/supplier-dashboard"
             element={isLoggedIn ? <SupplierDashboard /> : <LoginForm />}
+          />
+          <Route
+            path="/add-product"
+            element={isLoggedIn ? <AddProduct /> : <LoginForm />}
           />
         </Routes>
       </div>
