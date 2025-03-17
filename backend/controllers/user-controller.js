@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Inventory = require("../models/Inventory");
 const {
   validateSignup,
   hashPassword,
@@ -278,7 +279,16 @@ const getActiveSellers = async (req, res) => {
       status: "active",
     }).select("-password -createdAt -updatedAt -__v");
 
-    return res.status(200).json({ sellers: activeSellers });
+    const sellersWithProducts = await Promise.all(
+      activeSellers.map(async (seller) => {
+        const products = await Inventory.find({ addedBy: seller._id }).select(
+          "-createdAt -updatedAt -__v"
+        );
+        return { ...seller.toObject(), products };
+      })
+    );
+
+    return res.status(200).json({ sellers: sellersWithProducts });
   } catch (error) {
     return handleErrors(res, error);
   }
@@ -309,5 +319,5 @@ module.exports = {
   getInactiveUsers,
   changePassword,
   getActiveSellers,
-  getActiveBuyers
+  getActiveBuyers,
 };
