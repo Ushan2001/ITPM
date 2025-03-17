@@ -12,8 +12,15 @@ const generateSKU = () => {
 };
 
 const addProduct = async (req, res) => {
-  const { title, description, price, categoryType, quantity, status,supplierId } =
-    req.body;
+  const {
+    title,
+    description,
+    price,
+    categoryType,
+    quantity,
+    status,
+    supplierId,
+  } = req.body;
 
   if (status && !["active", "inactive"].includes(status)) {
     return res.status(400).json({
@@ -73,15 +80,10 @@ const addProduct = async (req, res) => {
 const getAllProduct = async (req, res) => {
   try {
     const products = await Inventory.find()
-      .populate("addedBy", "title")
-      .populate({
-        path: "products",
-        select: "-productId -createdAt -updatedAt -__v",
-        populate: { path: "addedBy", select: "title" },
-      })
+      .populate("addedBy", "name")
       .select("-createdAt -updatedAt -__v");
 
-    res.status(200).json(products.map((product) => product.toObject()));
+    res.status(200).json(products);
   } catch (error) {
     es.status(500).json({
       message: "Error fetching products",
@@ -90,7 +92,42 @@ const getAllProduct = async (req, res) => {
   }
 };
 
+const getProductBySellerId = async (req, res) => {
+  const sellerId = extractUserId(req);
+
+  try {
+    const products = await Inventory.find({ addedBy: sellerId })
+      .populate("addedBy", "name")
+      .select("-createdAt -updatedAt -__v");
+    if (!products) {
+      return res.status(404).json({ message: "Product not found!" });
+    }
+
+    return res.status(200).json(products);
+  } catch (error) {
+    return handleErrors(res, error, "Fetching product details failed!");
+  }
+};
+
+const getProductById = async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const product = await Inventory.findById(productId)
+      .populate("addedBy", "title")
+      .select("-createdAt -updatedAt -__v");
+    if (!product) {
+      return res.status(404).json({ message: "Product not found!" });
+    }
+
+    return res.status(200).json(product);
+  } catch (error) {
+    return handleErrors(res, error, "Fetching product details failed!");
+  }
+};
 module.exports = {
   addProduct,
   getAllProduct,
+  getProductBySellerId,
+  getProductById,
 };
