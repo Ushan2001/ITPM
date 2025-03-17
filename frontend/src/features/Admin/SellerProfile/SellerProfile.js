@@ -15,8 +15,6 @@ const Profile = () => {
   const profileImage = sellerData?.profilePic || "";
   const previewUrl = `${config.apiUrl}/api/v1/uploads/image/profile/${profileImage}`;
 
-  console.log("data", sellerData);
-
   const handleBackClick = () => {
     navigate(-1);
   };
@@ -43,7 +41,7 @@ const Profile = () => {
         className="p-button-outlined"
         style={{ margin: "20px", padding: "10px 20px", borderRadius: "5px" }}
       />
-      <Card className="profile-card">
+      <Card className="profile-card-seller">
         <div className="profile-details">
           <div className="profile-image-wrapper">{renderProfileImage()}</div>
           <div className="profile-text">
