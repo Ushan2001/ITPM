@@ -18,6 +18,7 @@ import InactiveUsers from "../features/Admin/UsersList/InactiveUsers";
 import ByuerProfile from "../features/Buyer/Profile/Profile";
 import SellersList from "../features/Buyer/SellersList/SellersList";
 import AddProduct from "../features/Seller/Inventory/AddProduct";
+import ProductComponent from "../features/Seller/Inventory/ProductComponent";
 import SupplierDashboard from "../features/Seller/SupplierDashboard/Dashboard";
 import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
 import EditSupplier from "../features/Seller/Suppliers/EditSupplier";
@@ -153,6 +154,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route
             path="/add-product"
             element={isLoggedIn ? <AddProduct /> : <LoginForm />}
+          />
+          <Route
+            path="/products"
+            element={isLoggedIn ? <ProductComponent /> : <LoginForm />}
           />
         </Routes>
       </div>
