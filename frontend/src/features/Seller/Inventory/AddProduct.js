@@ -2,6 +2,7 @@ import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { FileUpload } from "primereact/fileupload";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -57,15 +58,12 @@ export default function AddProduct() {
 
     const validationErrors = {};
     if (!formData.title) validationErrors.title = "Title is required";
-    if (!formData.description)
-      validationErrors.description = "Description is required";
+    if (!formData.description) validationErrors.description = "Description is required";
     if (!formData.price) validationErrors.price = "Price is required";
-    if (!formData.categoryType)
-      validationErrors.categoryType = "CategoryType is required";
+    if (!formData.categoryType) validationErrors.categoryType = "CategoryType is required";
     if (!formData.quantity) validationErrors.quantity = "Quantity is required";
     if (!formData.status) validationErrors.status = "Status is required";
-    if (!formData.productPic)
-      validationErrors.productPic = "ProductPic is required";
+    if (!formData.productPic) validationErrors.productPic = "ProductPic is required";
 
     if (Object.keys(validationErrors).length > 0) {
       for (let errorKey in validationErrors) {
@@ -98,7 +96,6 @@ export default function AddProduct() {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-         
         },
         body: payload,
       });
@@ -156,7 +153,7 @@ export default function AddProduct() {
           marginBottom: "25px",
         }}
       >
-        <b>Product Management</b>
+        <b>Inventory Management</b>
       </h3>
       <h3
         style={{
@@ -194,55 +191,6 @@ export default function AddProduct() {
             />
           </div>
         </div>
-        <div className="col-6" style={{ flex: 1 }}>
-          <div className="p-field mb-4">
-            <label
-              htmlFor="description"
-              className="mb-2 block"
-              style={{ fontWeight: "500" }}
-            >
-              Description&nbsp;
-              <small style={{ color: "red", fontStyle: "italic" }}>*</small>
-            </label>
-            <InputText
-              id="description"
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              required
-              style={{ marginTop: "20px", marginBottom: "20px", width: "100%" }}
-            />
-          </div>
-        </div>
-        <div className="col-6" style={{ flex: 1 }}>
-          <div className="p-field mb-4">
-            <label
-              htmlFor="price"
-              className="mb-2 block"
-              style={{ fontWeight: "500" }}
-            >
-              Price&nbsp;
-              <small style={{ color: "red", fontStyle: "italic" }}>*</small>
-            </label>
-            <InputText
-              id="price"
-              name="price"
-              type="number"
-              value={formData.price}
-              onChange={handleInputChange}
-              required
-              style={{ marginTop: "20px", marginBottom: "20px", width: "100%" }}
-            />
-          </div>
-        </div>
-      </div>
-      <br />
-
-      <div
-        className="grid"
-        style={{ display: "flex", gap: "20px", width: "100%" }}
-      >
         <div className="col-6" style={{ flex: 1 }}>
           <div className="p-field mb-4">
             <label
@@ -285,6 +233,35 @@ export default function AddProduct() {
             />
           </div>
         </div>
+
+        <div className="col-6" style={{ flex: 1 }}>
+          <div className="p-field mb-4">
+            <label
+              htmlFor="price"
+              className="mb-2 block"
+              style={{ fontWeight: "500" }}
+            >
+              Price&nbsp;
+              <small style={{ color: "red", fontStyle: "italic" }}>*</small>
+            </label>
+            <InputText
+              id="price"
+              name="price"
+              type="number"
+              value={formData.price}
+              onChange={handleInputChange}
+              required
+              style={{ marginTop: "20px", marginBottom: "20px", width: "100%" }}
+            />
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div
+        className="grid"
+        style={{ display: "flex", gap: "20px", width: "100%" }}
+      >
         <div className="col-6" style={{ flex: 1 }}>
           <div className="p-field mb-4">
             <label
@@ -310,18 +287,39 @@ export default function AddProduct() {
           </div>
         </div>
 
-        <div className="p-field upload-field">
-          <label htmlFor="productPic">Product Picture</label>
-          <FileUpload
-            name="productPic"
-            accept="image/*"
-            customUpload
-            auto
-            uploadHandler={onFileSelect}
-            chooseLabel="Select Image"
-            className="animate-upload"
-          />
+        <div className="col-6" style={{ flex: 1 }}>
+          <div className="p-field mb-4">
+            <label
+              htmlFor="description"
+              className="mb-2 block"
+              style={{ fontWeight: "500" }}
+            >
+              Description&nbsp;
+              <small style={{ color: "red", fontStyle: "italic" }}>*</small>
+            </label>
+            <InputTextarea
+              id="description"
+              type="text"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              required
+              style={{ marginTop: "20px", marginBottom: "20px", width: "100%" }}
+            />
+          </div>
         </div>
+      </div>
+      <div className="p-field upload-field">
+        <label htmlFor="productPic">Product Picture</label>
+        <FileUpload
+          name="productPic"
+          accept="image/*"
+          customUpload
+          auto
+          uploadHandler={onFileSelect}
+          chooseLabel="Select Image"
+          className="animate-upload"
+        />
       </div>
       <div
         className="p-field"
