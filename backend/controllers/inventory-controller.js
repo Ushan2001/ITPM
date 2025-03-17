@@ -125,9 +125,67 @@ const getProductById = async (req, res) => {
     return handleErrors(res, error, "Fetching product details failed!");
   }
 };
+
+const deleteProduct = async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const existingProduct = await Inventory.findById(productId);
+    if (!existingProduct) {
+      return res.status(404).json({ message: "Product not found!" });
+    }
+
+    await Inventory.findByIdAndDelete(productId);
+
+    res.status(200).json({
+      message: "Product  deleted successfully!",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Deleting Product failed",
+      error: error.message,
+    });
+  }
+};
+
+const updateProduct = async (req, res) => {
+  const productId = req.params.id;
+  const { title, description, price, categoryType, quantity,productPic, status } = req.body;
+
+  try {
+    const existingProduct = await Inventory.findById(productId);
+    if (!existingProduct) {
+      return res.status(404).json({ message: "Supplier not found!" });
+    }
+
+    if (status && !["active", "inactive"].includes(status)) {
+      return res.status(400).json({
+        message: "Status must be either 'active' or 'inactive'",
+      });
+    }
+
+    const updatedProduct = await Inventory.findByIdAndUpdate(
+      productId,
+      { title, description, price, categoryType,quantity,productPic, status },
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({
+      message: "Product updated successfully!",
+      updatedProduct,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Updating product failed",
+      error: error.message,
+    });
+  }
+};
 module.exports = {
   addProduct,
   getAllProduct,
   getProductBySellerId,
   getProductById,
+  deleteProduct,
+  updateProduct,
 };

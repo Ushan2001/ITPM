@@ -12,12 +12,14 @@ import SellerAppMenu from "../components/seller/AppMenu";
 import AdminDashboard from "../features/Admin/Dashboard/Dashboard";
 import MapComponentMark from "../features/Admin/Polygon/MapComponent";
 import MapComponent from "../features/Admin/Polygon/MarkPolygon";
+import SellerProfile from "../features/Admin/SellerProfile/SellerProfile";
 import SellerComponent from "../features/Admin/Sellers/SellerComponent";
 import ActiveUsers from "../features/Admin/UsersList/ActiveUsers";
 import InactiveUsers from "../features/Admin/UsersList/InactiveUsers";
 import ByuerProfile from "../features/Buyer/Profile/Profile";
 import SellersList from "../features/Buyer/SellersList/SellersList";
 import AddProduct from "../features/Seller/Inventory/AddProduct";
+import EditProduct from "../features/Seller/Inventory/EditProduct";
 import ProductComponent from "../features/Seller/Inventory/ProductComponent";
 import SupplierDashboard from "../features/Seller/SupplierDashboard/Dashboard";
 import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
@@ -27,7 +29,6 @@ import LoginForm from "../features/Users/LoginForm";
 import Profile from "../features/Users/Profile";
 import SignupForm from "../features/Users/SignupForm";
 import LandingPage from "../pages/LandingPage";
-import SellerProfile from "../features/Admin/SellerProfile/SellerProfile";
 import rootReducer from "../store/reducers";
 
 const store = createStore(rootReducer);
@@ -164,6 +165,11 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
             path="/products"
             element={isLoggedIn ? <ProductComponent /> : <LoginForm />}
           />
+          <Route
+            path="/edit-product/:id"
+            element={isLoggedIn ? <EditProduct /> : <LoginForm />}
+          />
+        
         </Routes>
       </div>
     </div>

@@ -22,7 +22,7 @@ export default function ProductComponent() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `${config.apiUrl}/api/v1/product/seller-by`,
+        `${config.apiUrl}/api/v1/inventory/seller-by`,
         {
           method: "GET",
           headers: {
@@ -64,7 +64,7 @@ export default function ProductComponent() {
   const deleteProduct = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await fetch(`${config.apiUrl}/api/v1/product/${id}`, {
+      await fetch(`${config.apiUrl}/api/v1/inventory/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -92,9 +92,9 @@ export default function ProductComponent() {
         src={`${config.apiUrl}/api/v1/uploads/image/product/${rowData.productPic}`}
         alt="Profile"
         style={{
-          width: "50px",
+          width: "80px",
           height: "50px",
-          borderRadius: "50%",
+          borderRadius: "15%",
           objectFit: "cover",
         }}
       />
@@ -152,14 +152,14 @@ export default function ProductComponent() {
           >
             <Column
               field="productPic"
-              header="Product Picture"
+              header="Product Image"
               body={imageBodyTemplate}
             />
-            <Column field="title" header="title" sortable />
-            <Column field="description" header="description" />
-            <Column field="price" header="price" />
-            <Column field="quantity" header="quantity" />
-            <Column field="categoryType" header="categoryType" />
+            <Column field="title" header="Title" />
+            <Column field="description" header="Description" />
+            <Column field="price" header="Price" />
+            <Column field="quantity" header="QTY" />
+            <Column field="categoryType" header="Category Type" />
             <Column field="publishDate" header="Publish Date" />
             <Column field="status" header="Status" body={statusBodyTemplate} />
             <Column body={actionBodyTemplate} header="Actions" />

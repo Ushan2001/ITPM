@@ -58,15 +58,12 @@ export default function AddProduct() {
 
     const validationErrors = {};
     if (!formData.title) validationErrors.title = "Title is required";
-    if (!formData.description)
-      validationErrors.description = "Description is required";
+    if (!formData.description) validationErrors.description = "Description is required";
     if (!formData.price) validationErrors.price = "Price is required";
-    if (!formData.categoryType)
-      validationErrors.categoryType = "CategoryType is required";
+    if (!formData.categoryType) validationErrors.categoryType = "CategoryType is required";
     if (!formData.quantity) validationErrors.quantity = "Quantity is required";
     if (!formData.status) validationErrors.status = "Status is required";
-    if (!formData.productPic)
-      validationErrors.productPic = "ProductPic is required";
+    if (!formData.productPic) validationErrors.productPic = "ProductPic is required";
 
     if (Object.keys(validationErrors).length > 0) {
       for (let errorKey in validationErrors) {
