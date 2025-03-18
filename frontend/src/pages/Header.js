@@ -8,13 +8,20 @@ export default function Header() {
   const handleOurSellers = () => {
     navigate("/sellers-list");
   };
+
+  const handleProductList = () => {
+    navigate("/buyer-product");
+  };
   return (
     <div>
       <header className="hero">
         <div className="hero-content">
           <h1>Streamline Your Buying & Selling Process</h1>
           <p>The ultimate management system for businesses of all sizes</p>
-          <button className="cta-btn">Get Started</button>&nbsp;&nbsp;
+          <button className="cta-btn" onClick={handleProductList}>
+            Get Started
+          </button>
+          &nbsp;&nbsp;
           <button className="cta-btn" onClick={handleOurSellers}>
             Our Sellers
           </button>

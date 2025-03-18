@@ -1,4 +1,5 @@
 const Inventory = require("../models/Inventory");
+const User = require("../models/User");
 const { extractUserId } = require("../helpers/auth-middleware");
 const moment = require("moment-timezone");
 const { param } = require("../routes/inventory-route");
@@ -109,6 +110,34 @@ const getProductBySellerId = async (req, res) => {
   }
 };
 
+const getProductBySellerIdInBuyer = async (req, res) => {
+  const { sellerId } = req.params;
+
+  try {
+    const seller = await User.findById(sellerId);
+    if (!seller) {
+      return res.status(404).json({ message: "Seller not found!" });
+    }
+
+    const products = await Inventory.find({ addedBy: sellerId })
+      .populate("addedBy", "name")
+      .select("-createdAt -updatedAt -__v");
+
+    if (products.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No products found for this seller!" });
+    }
+
+    return res.status(200).json(products);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Fetching product details failed!",
+      error: error.message,
+    });
+  }
+};
+
 const getProductById = async (req, res) => {
   const productId = req.params.id;
 
@@ -207,4 +236,5 @@ module.exports = {
   getProductById,
   deleteProduct,
   updateProduct,
+  getProductBySellerIdInBuyer,
 };

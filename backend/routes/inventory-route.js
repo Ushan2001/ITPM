@@ -7,6 +7,7 @@ const {
   getProductById,
   deleteProduct,
   updateProduct,
+  getProductBySellerIdInBuyer,
 } = require("../controllers/inventory-controller");
 const { verifyToken } = require("../helpers/auth-middleware.js");
 const {
@@ -19,6 +20,7 @@ router.post("/", uploadProductPicture, addProduct);
 router.get("/", getAllProduct);
 router.get("/seller-by", getProductBySellerId);
 router.get("/:id", getProductById);
+router.get("/buyer/:sellerId", getProductBySellerIdInBuyer);
 router.delete("/:id", deleteProduct);
 router.put("/:id", uploadProductPicture, updateProduct);
 

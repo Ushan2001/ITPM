@@ -29,6 +29,8 @@ import LoginForm from "../features/Users/LoginForm";
 import Profile from "../features/Users/Profile";
 import SignupForm from "../features/Users/SignupForm";
 import LandingPage from "../pages/LandingPage";
+import ProductPage from "../features/Buyer/ProductList/ProductView";
+import ProductPageBuyer from "../features/Buyer/ProductList/ProductViewSellerId";
 import rootReducer from "../store/reducers";
 
 const store = createStore(rootReducer);
@@ -57,6 +59,8 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
   const isSignUpPage = location.pathname === "/signup";
   const isProfilePage = location.pathname === "/profile";
   const isSellerListPage = location.pathname === "/sellers-list";
+  const isProductPage = location.pathname === "/buyer-product";
+  const isProductPageBuyer = location.pathname === "/seller-product";
   const largeScreen = window.innerWidth >= 1920;
   const userType = localStorage.getItem("userType");
 
@@ -70,6 +74,8 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           !isLoginPage &&
           !isProfilePage &&
           !isSellerListPage &&
+          !isProductPage &&
+          !isProductPageBuyer &&
           isLoggedIn
             ? "250px"
             : "0",
@@ -109,6 +115,8 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/profile" element={<ByuerProfile />} />
           <Route path="/sellers-list" element={<SellersList />} />
+          <Route path="/buyer-product" element={<ProductPage />} />
+          <Route path="/seller-product" element={<ProductPageBuyer />} />
           <Route
             path="/me"
             element={isLoggedIn ? <Profile /> : <LoginForm />}
@@ -169,7 +177,6 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
             path="/edit-product/:id"
             element={isLoggedIn ? <EditProduct /> : <LoginForm />}
           />
-        
         </Routes>
       </div>
     </div>
