@@ -76,7 +76,7 @@ export default function ProductComponent() {
         summary: "Success",
         detail: "Product deleted successfully",
       });
-      fetchProductsBySellerId(); // ✅ Fixed function call
+      fetchProductsBySellerId();
     } catch (error) {
       toast.current.show({
         severity: "error",
