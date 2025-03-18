@@ -9,6 +9,7 @@ import { Toast } from "primereact/toast";
 import config from "../../../config";
 import "./style.css";
 import NavBar from "../../../pages/NavBar";
+import { useNavigate } from "react-router-dom";
 
 const SellersList = () => {
   const [sellers, setSellers] = useState([]);
@@ -17,6 +18,7 @@ const SellersList = () => {
   const [loadingNearby, setLoadingNearby] = useState(false);
   const [showMapLoading, setShowMapLoading] = useState(false);
   const toast = React.useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchSellers();
@@ -130,11 +132,15 @@ const SellersList = () => {
       return <SellerSkeleton />;
     }
 
+    const handleSellerProduct = () => {
+      navigate("/seller-product", { state: { sellerId: seller._id } });
+    };
+
     return (
       <div className={`seller-card ${isNearby ? "nearby-animation" : ""}`}>
         <Card className="seller-card-inner">
           <div className="seller-card-content">
-            <div className="seller-image">
+            <div className="seller-image" onClick={handleSellerProduct}>
               <Avatar
                 image={
                   seller.profilePic
