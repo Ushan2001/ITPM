@@ -12,6 +12,10 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
     subAmount: {
       type: Number,
       required: true,
@@ -24,9 +28,12 @@ const orderSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    deliveryAddress: {
+    address: {
       type: String,
       required: true,
+    },
+    deliveryAddress: {
+      type: String,
     },
     orderDate: {
       type: String,
@@ -43,7 +50,7 @@ const orderSchema = new Schema(
     },
     paymentStatus: {
       type: String,
-      enum: ["pending", "complete"],
+      enum: ["pending", "completed"],
       default: "pending",
     },
   },
