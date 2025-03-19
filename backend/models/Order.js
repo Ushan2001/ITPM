@@ -24,10 +24,6 @@ const orderSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    price: {
-      type: Schema.Types.ObjectId,
-      ref: "Inventory",
-    },
     deliveryAddress: {
       type: String,
       required: true,
@@ -47,8 +43,8 @@ const orderSchema = new Schema(
     },
     paymentStatus: {
       type: String,
-      enum: ["incomplete", "complete"],
-      default: "incomplete",
+      enum: ["pending", "complete"],
+      default: "pending",
     },
   },
   { timestamps: true }
