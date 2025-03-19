@@ -2,7 +2,6 @@ const Supplier = require("../models/Supplier");
 const SupplierProduct = require("../models/SupplierProduct");
 const { extractUserId } = require("../helpers/auth-middleware");
 const moment = require("moment-timezone");
-const { param } = require("../routes/supplier-route");
 
 const handleErrors = (res, error) => {
   return res.status(500).json(error);
