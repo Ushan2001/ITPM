@@ -88,7 +88,7 @@ const getOrderByBuyerId = async (req, res) => {
     const order = await Order.find({ userId: buyerId })
       .populate("userId", "name")
       .populate("sellerId", "name")
-      .populate("productId", "title")
+      .populate("productId", "title productPic")
       .select("-createdAt -updatedAt -__v");
     if (!order) {
       return res.status(404).json({ message: "Order not found!" });
@@ -101,13 +101,13 @@ const getOrderByBuyerId = async (req, res) => {
 };
 
 const getOrderBySellerId = async (req, res) => {
-  const sellerId = req.params.sellerId;
+  const sellerId = extractUserId(req);
 
   try {
     const order = await Order.find({ sellerId: sellerId })
       .populate("userId", "name")
       .populate("sellerId", "name")
-      .populate("productId", "title")
+      .populate("productId", "title productPic")
       .select("-createdAt -updatedAt -__v");
     if (!order) {
       return res.status(404).json({ message: "Order not found!" });
