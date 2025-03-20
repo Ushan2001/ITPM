@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Badge } from "primereact/badge";
@@ -11,7 +12,7 @@ import NavBar from "../../../pages/NavBar";
 import { useLocation } from "react-router-dom";
 
 const ProductPage = () => {
-  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(8);
@@ -23,6 +24,7 @@ const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const location = useLocation();
   const sellerId = location.state?.sellerId;
+  const navigate = useNavigate();
 
   console.log("sellerId", sellerId);
 
@@ -41,7 +43,7 @@ const ProductPage = () => {
   }, [sellerId]);
 
   useEffect(() => {
-    let result = [...products];
+    let result = [...product];
     if (searchQuery) {
       result = result.filter(
         (product) =>
@@ -82,7 +84,7 @@ const ProductPage = () => {
 
     setFilteredProducts(result);
     setTotalRecords(result.length);
-  }, [products, searchQuery, sortOption, selectedCategory]);
+  }, [product, searchQuery, sortOption, selectedCategory]);
 
   const fetchProducts = async (sellerId) => {
     try {
@@ -100,7 +102,7 @@ const ProductPage = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      setProducts(data);
+      setProduct(data);
 
       const uniqueCategories = [
         ...new Set(data.map((product) => product.categoryType)),
@@ -200,11 +202,20 @@ const ProductPage = () => {
                 label="Add to Cart"
                 icon="pi pi-shopping-cart"
                 className="p-button-rounded"
+                onClick={() => navigate("/add-order", { state: { product } })}
+                style={{
+                  paddingTop: "8%",
+                  paddingBottom: "8%",
+                }}
               />
               <Button
                 label="View Details"
                 icon="pi pi-eye"
                 className="p-button-rounded p-button-outlined"
+                style={{
+                  paddingTop: "8%",
+                  paddingBottom: "8%",
+                }}
               />
             </div>
           );

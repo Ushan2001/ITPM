@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Badge } from "primereact/badge";
@@ -20,6 +21,7 @@ const ProductPage = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const navigate = useNavigate();
 
   const sortOptions = [
     { label: "Newest First", value: "newest" },
@@ -190,11 +192,20 @@ const ProductPage = () => {
                 label="Add to Cart"
                 icon="pi pi-shopping-cart"
                 className="p-button-rounded"
+                onClick={() => navigate("/add-order", { state: { product } })}
+                style={{
+                  paddingTop: "8%",
+                  paddingBottom: "8%",
+                }}
               />
               <Button
                 label="View Details"
                 icon="pi pi-eye"
                 className="p-button-rounded p-button-outlined"
+                style={{
+                  paddingTop: "8%",
+                  paddingBottom: "8%",
+                }}
               />
             </div>
           );

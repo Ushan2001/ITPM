@@ -14,7 +14,7 @@ router.use(verifyToken);
 
 router.post("/", addOrder);
 router.get("/buyer", getOrderByBuyerId);
-router.get("/:sellerId", getOrderBySellerId);
+router.get("/seller", getOrderBySellerId);
 router.put("/:id", updateOrderStatus);
 router.put("/update/:orderId", updateOrder);
 router.delete("/:id", deleteOrder);
