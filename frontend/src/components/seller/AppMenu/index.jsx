@@ -99,6 +99,18 @@ const AppMenu = () => {
         },
       ],
     },
+    {
+      label: "Orders",
+      icon: "pi pi-cart-arrow-down",
+      expanded: false,
+      items: [
+        {
+          label: "Order List",
+          icon: "pi pi-list-check",
+          command: () => navigate("/seller-orders"),
+        },
+      ],
+    },
   ];
 
   const start = (

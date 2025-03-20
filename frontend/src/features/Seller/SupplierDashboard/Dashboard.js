@@ -180,7 +180,7 @@ const SupplierDashboard = () => {
   }
 
   return (
-    <div className="dashboard-container">
+    <div className="supplier-dashboard-container">
       <Toast ref={toast} />
 
       {/* Header Section */}
