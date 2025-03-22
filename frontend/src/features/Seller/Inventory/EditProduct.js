@@ -26,6 +26,17 @@ export default function EditProduct() {
   const toast = useRef(null);
   const navigate = useNavigate();
 
+  const categoryOptions = [
+    { label: "Electronic", value: "Electronic" },
+    { label: "Beauty And Health", value: "Beauty And Health" },
+    { label: "Jewelry & Accessories", value: "Jewelry & Accessories" },
+    { label: "Mens Accessories", value: "Mens Accessories" },
+    { label: "Tools", value: "Tools" },
+    { label: "Ladies Shoes", value: "Ladies Shoes" },
+    { label: "Womens Clothing", value: "Womens Clothing" },
+    { label: "Home & Kitchen", value: "Home & Kitchen" },
+  ];
+
   useEffect(() => {
     fetchProductsById(id);
   }, [id]);
@@ -267,18 +278,24 @@ export default function EditProduct() {
                       *
                     </small>
                   </label>
-                  <InputText
+                  <Dropdown
                     id="categoryType"
-                    type="text"
                     name="categoryType"
                     value={formData.categoryType}
-                    onChange={handleChange}
-                    required
+                    options={categoryOptions}
+                    onChange={(e) =>
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        categoryType: e.value,
+                      }))
+                    }
+                    placeholder="Select a Category"
                     style={{
                       marginTop: "20px",
                       marginBottom: "20px",
                       width: "100%",
                     }}
+                    required
                   />
                 </div>
               </div>
