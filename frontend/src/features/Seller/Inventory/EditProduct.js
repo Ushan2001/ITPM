@@ -123,7 +123,6 @@ export default function EditProduct() {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-         
         },
         body: formDataToSend,
       });
@@ -138,6 +137,7 @@ export default function EditProduct() {
         });
         setLoading(false);
         fetchProductsById(id);
+        navigate("/products");
       } else {
         toast.current.show({
           severity: "error",

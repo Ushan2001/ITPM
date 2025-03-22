@@ -43,8 +43,16 @@ export default function AddSupplierProduct({
     setLoading(true);
     const validationErrors = {};
     if (!formData.name) validationErrors.name = "Name is required";
-    if (!formData.price) validationErrors.price = "Price is required";
-    if (!formData.quantity) validationErrors.quantity = "Quantity  is required";
+    if (!formData.price) {
+      validationErrors.price = "Price is required";
+    } else if (isNaN(formData.price) || Number(formData.price) <= 0) {
+      validationErrors.price = "Price must be a positive number";
+    }
+    if (!formData.quantity) {
+      validationErrors.quantity = "Quantity is required";
+  } else if (!Number.isInteger(Number(formData.quantity)) || Number(formData.quantity) <= 0) {
+      validationErrors.quantity = "Quantity must be a positive integer";
+  }
     if (!formData.status) validationErrors.status = "Status is required";
     if (!formData.supplierId)
       validationErrors.supplierId = "Supplier Id is required";
@@ -207,6 +215,7 @@ export default function AddSupplierProduct({
                   marginBottom: "20px",
                   width: "100%",
                 }}
+                min={0}
               />
             </div>
           </div>
@@ -238,6 +247,7 @@ export default function AddSupplierProduct({
                   marginBottom: "20px",
                   width: "100%",
                 }}
+                min={1}
               />
             </div>
           </div>
