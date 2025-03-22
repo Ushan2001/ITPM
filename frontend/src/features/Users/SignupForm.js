@@ -203,6 +203,7 @@ const SignupForm = () => {
                 <label htmlFor="phoneNo">Phone Number</label>
                 <InputText
                   id="phoneNo"
+                  type="number"
                   value={phoneNo}
                   onChange={(e) => setPhoneNo(e.target.value)}
                   placeholder="Enter phone number"
