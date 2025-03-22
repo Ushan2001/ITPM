@@ -18,7 +18,12 @@ const validateSignup = (data) => {
         "string.pattern.base":
           "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.",
       }),
-    phoneNo: Joi.string().optional(),
+    phoneNo: Joi.string()
+      .pattern(/^\d{10}$/)
+      .optional()
+      .messages({
+        "string.pattern.base": "Phone number must be exactly 10 digits.",
+      }),
     profilePic: Joi.string().optional(),
     address: Joi.string().optional(),
     storeName: Joi.string().optional(),

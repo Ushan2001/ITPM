@@ -77,6 +77,7 @@ export default function AddSupplier() {
           status: "active",
         });
         setLoading(false);
+        navigate("/suppliers");
       } else {
         toast.current.show({
           severity: "error",

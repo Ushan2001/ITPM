@@ -108,6 +108,7 @@ export default function EditSupplier() {
         });
         setLoading(false);
         fetchSuppliersById(id);
+        navigate("/suppliers");
       } else {
         toast.current.show({
           severity: "error",

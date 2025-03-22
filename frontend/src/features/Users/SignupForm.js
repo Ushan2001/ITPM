@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
@@ -33,6 +34,7 @@ const SignupForm = () => {
     lng: 79.8612,
   });
   const toast = useRef(null);
+  const navigate = useNavigate();
 
   const userTypes = [
     { label: "Buyer", value: "buyer" },
@@ -67,6 +69,16 @@ const SignupForm = () => {
         severity: "error",
         summary: "Incomplete Form",
         detail: "Please fill all required fields",
+        life: 3000,
+      });
+      return;
+    }
+
+    if (phoneNo.length !== 10) {
+      toast.current.show({
+        severity: "error",
+        summary: "Invalid Phone Number",
+        detail: "Phone number must be exactly 10 digits.",
         life: 3000,
       });
       return;
@@ -120,6 +132,7 @@ const SignupForm = () => {
       setMapCenter({ lat: 6.9271, lng: 79.8612 });
       setProfilePic(null);
       setLoading(false);
+      navigate("/login");
     } catch (error) {
       toast.current.show({
         severity: "error",
@@ -203,9 +216,14 @@ const SignupForm = () => {
                 <label htmlFor="phoneNo">Phone Number</label>
                 <InputText
                   id="phoneNo"
-                  type="number"
+                  type="text"
                   value={phoneNo}
-                  onChange={(e) => setPhoneNo(e.target.value)}
+                  onChange={(e) => {
+                    const input = e.target.value;
+                    if (/^\d{0,10}$/.test(input)) {
+                      setPhoneNo(input);
+                    }
+                  }}
                   placeholder="Enter phone number"
                 />
               </div>

@@ -73,11 +73,19 @@ export default function NavBar() {
     setUser("");
   };
 
+  const handleHome = () => {
+    navigate("/");
+  };
+
   return (
     <div>
       <Toast ref={toast} />
       <nav className="navbar">
-        <div className="logo">
+        <div
+          className="logo"
+          onClick={handleHome}
+          style={{ cursor: "pointer" }}
+        >
           <h1>BuySell Nexus</h1>
         </div>
         <div className="nav-links">

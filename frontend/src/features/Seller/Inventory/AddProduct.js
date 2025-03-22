@@ -128,6 +128,8 @@ export default function AddProduct() {
           productPic: null,
         });
 
+        navigate("/products");
+
         if (fileUploadRef.current) {
           fileUploadRef.current.clear();
         }
