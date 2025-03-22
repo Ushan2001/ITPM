@@ -133,9 +133,32 @@ const ProductPage = () => {
     }).format(value);
   };
 
+  const goToMyOrders = () => {
+    navigate("/my-orders");
+  };
+
   const header = (
     <div className="product-page-header">
       <h2>Discover Quality Products</h2>
+
+      <Button
+        label="My Orders"
+        icon="pi pi-shopping-bag"
+        className="p-button-rounded p-button-primary my-orders-button"
+        onClick={goToMyOrders}
+        style={{
+          background: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)",
+          border: "none",
+          boxShadow: "0 4px 8px rgba(99, 102, 241, 0.3)",
+          padding: "0.75rem 1.5rem",
+          fontSize: "1rem",
+          fontWeight: "600",
+          width: "200px",
+          alignItems: "center",
+          gap: "0.5rem",
+          transition: "all 0.3s ease",
+        }}
+      />
 
       <div className="filter-container">
         <div className="search-box">

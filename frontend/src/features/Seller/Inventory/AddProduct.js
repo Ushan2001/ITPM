@@ -21,6 +21,7 @@ export default function AddProduct() {
   const [loading, setLoading] = useState(false);
   const toast = useRef(null);
   const navigate = useNavigate();
+  const fileUploadRef = useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,12 +59,19 @@ export default function AddProduct() {
 
     const validationErrors = {};
     if (!formData.title) validationErrors.title = "Title is required";
-    if (!formData.description) validationErrors.description = "Description is required";
+    if (!formData.description)
+      validationErrors.description = "Description is required";
+    if (!formData.categoryType)
+      validationErrors.categoryType = "CategoryType is required";
     if (!formData.price) validationErrors.price = "Price is required";
-    if (!formData.categoryType) validationErrors.categoryType = "CategoryType is required";
+    else if (formData.price <= 0)
+      validationErrors.price = "Price must be greater than zero";
     if (!formData.quantity) validationErrors.quantity = "Quantity is required";
+    else if (formData.quantity <= 0)
+      validationErrors.quantity = "Quantity must be greater than zero";
     if (!formData.status) validationErrors.status = "Status is required";
-    if (!formData.productPic) validationErrors.productPic = "ProductPic is required";
+    if (!formData.productPic)
+      validationErrors.productPic = "ProductPic is required";
 
     if (Object.keys(validationErrors).length > 0) {
       for (let errorKey in validationErrors) {
@@ -119,6 +127,12 @@ export default function AddProduct() {
           status: "active",
           productPic: null,
         });
+
+        navigate("/products");
+
+        if (fileUploadRef.current) {
+          fileUploadRef.current.clear();
+        }
       } else {
         toast.current.show({
           severity: "error",
@@ -312,6 +326,7 @@ export default function AddProduct() {
       <div className="p-field upload-field">
         <label htmlFor="productPic">Product Picture</label>
         <FileUpload
+          ref={fileUploadRef}
           name="productPic"
           accept="image/*"
           customUpload

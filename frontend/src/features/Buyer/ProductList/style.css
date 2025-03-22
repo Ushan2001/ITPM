@@ -190,6 +190,11 @@
   grid-column: 1 / -1;
 }
 
+.my-orders-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(99, 102, 241, 0.4);
+}
+
 @media (max-width: 768px) {
   .product-grid {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
