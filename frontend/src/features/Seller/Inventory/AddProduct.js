@@ -46,6 +46,24 @@ export default function AddProduct() {
     });
   };
 
+  const categoryOptions = [
+    { label: "Electronic", value: "Electronic" },
+    { label: "Beauty And Health", value: "Beauty And Health" },
+    { label: "Jewelry & Accessories", value: "Jewelry & Accessories" },
+    { label: "Mens Accessories", value: "Mens Accessories" },
+    { label: "Tools", value: "Tools" },
+    { label: "Ladies Shoes", value: "Ladies Shoes" },
+    { label: "Womens Clothing", value: "Womens Clothing" },
+    { label: "Home & Kitchen", value: "Home & Kitchen" },
+  ];
+
+  const handleCategoryChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      categoryType: e.value,
+    }));
+  };
+
   const handleDropdownChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -236,14 +254,15 @@ export default function AddProduct() {
               Category Type&nbsp;
               <small style={{ color: "red", fontStyle: "italic" }}>*</small>
             </label>
-            <InputText
+            <Dropdown
               id="categoryType"
-              type="text"
               name="categoryType"
               value={formData.categoryType}
-              onChange={handleInputChange}
-              required
+              onChange={handleCategoryChange}
+              options={categoryOptions}
+              placeholder="Select a Category"
               style={{ marginTop: "20px", marginBottom: "20px", width: "100%" }}
+              required
             />
           </div>
         </div>
