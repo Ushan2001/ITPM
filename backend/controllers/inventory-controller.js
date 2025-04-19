@@ -2,7 +2,6 @@ const Inventory = require("../models/Inventory");
 const User = require("../models/User");
 const { extractUserId } = require("../helpers/auth-middleware");
 const moment = require("moment-timezone");
-const { param } = require("../routes/inventory-route");
 
 const handleErrors = (res, error) => {
   return res.status(500).json(error);

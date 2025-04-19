@@ -90,6 +90,18 @@ const AppMenu = () => {
       ],
     },
     {
+      label: "Documentation",
+      icon: "pi pi-book",
+      expanded: false,
+      items: [
+        {
+          label: "User Reports",
+          icon: "pi pi-file",
+          command: () => navigate("/user-report"),
+        },
+      ],
+    },
+    {
       label: "Settings",
       icon: "pi pi-cog",
       expanded: false,
