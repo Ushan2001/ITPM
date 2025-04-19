@@ -160,10 +160,11 @@ const MyOrders = () => {
   const productTemplate = (rowData) => {
     return (
       <div className="product-cell">
-        <span className="product-name">{rowData.productId.title}</span>
+        <span className="product-name">{rowData.productId?.title || "No Product Available"}</span>
       </div>
     );
   };
+  
 
   const statusTemplate = (rowData) => {
     return (

@@ -30,8 +30,13 @@ export default function AddSupplier() {
     e.preventDefault();
     setLoading(true);
     const validationErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.name) validationErrors.name = "Name is required";
-    if (!formData.email) validationErrors.email = "Email is required";
+    if (!formData.email) {
+      validationErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      validationErrors.email = "Invalid email format";
+    }
     if (!formData.phoneNo) validationErrors.phoneNo = "Phone No is required";
     if (!formData.address) validationErrors.address = "Address is required";
     if (!formData.status) validationErrors.status = "Status is required";
