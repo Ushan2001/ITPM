@@ -34,6 +34,7 @@ import ProductPageBuyer from "../features/Buyer/ProductList/ProductViewSellerId"
 import AddOrder from "../features/Buyer/Orders/AddOrder";
 import MyOrders from "../features/Buyer/Orders/MyOrders";
 import SellerOrders from "../features/Seller/Orders/OrderComponent";
+import UserReportGenerator from "../features/Admin/Report/UserReport";
 import rootReducer from "../store/reducers";
 
 const store = createStore(rootReducer);
@@ -191,6 +192,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route
             path="/seller-orders"
             element={isLoggedIn ? <SellerOrders /> : <LoginForm />}
+          />
+          <Route
+            path="/user-report"
+            element={isLoggedIn ? <UserReportGenerator /> : <LoginForm />}
           />
         </Routes>
       </div>
