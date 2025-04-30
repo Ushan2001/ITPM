@@ -1,0 +1,258 @@
+.supplier-report-generator {
+    font-family: "Roboto", sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .report-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .report-title {
+    font-size: 2.5rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    animation: slideDown 0.7s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .report-subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .filters-card {
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    animation: slideIn 0.7s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .filter-item {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .report-options-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.8s ease-out;
+  }
+  
+  .report-type-selection {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+  
+  .report-type-option {
+    flex: 1;
+    max-width: 250px;
+  }
+  
+  .report-type-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .report-type-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .report-type-box.selected {
+    border-color: #4338ca;
+    background-color: #eef2ff;
+  }
+  
+  .report-type-box i {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    color: #4338ca;
+  }
+  
+  .report-options {
+    margin-top: 1rem;
+  }
+  
+  .option-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .option-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .generate-button-container {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .generate-button {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .supplier-table-container {
+    margin-top: 2rem;
+    animation: slideUp 0.9s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .supplier-data-table {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    color: white;
+    font-size: 0.85rem;
+    display: inline-block;
+  }
+  
+  .status-active {
+    background-color: #10b981;
+  }
+  
+  .status-inactive {
+    background-color: #ef4444;
+  }
+  
+  .address-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+  }
+  
+  .report-preview {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .report-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .report-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .report-info-item .label {
+    font-size: 0.9rem;
+    color: #64748b;
+  }
+  
+  .report-info-item .value {
+    font-weight: 500;
+    color: #1e293b;
+  }
+  
+  .report-data-table {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  .supplier-products-container {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .supplier-products-container h5 {
+    color: #4338ca;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .report-type-selection {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .report-type-option {
+      width: 100%;
+      max-width: 100%;
+    }
+  
+    .filter-item {
+      min-width: 100%;
+    }
+  }
