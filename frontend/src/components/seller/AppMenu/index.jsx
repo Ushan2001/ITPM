@@ -111,6 +111,18 @@ const AppMenu = () => {
         },
       ],
     },
+    {
+      label: "Documentation",
+      icon: "pi pi-book",
+      expanded: false,
+      items: [
+        {
+          label: "Inventory Reports",
+          icon: "pi pi-file",
+          command: () => navigate("/inventory-report"),
+        },
+      ],
+    },
   ];
 
   const start = (
