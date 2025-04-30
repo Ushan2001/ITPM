@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
+import { Card } from "primereact/card";
 import { Column } from "primereact/column";
-import { Toast } from "primereact/toast";
-import { Tag } from "primereact/tag";
-import { Dialog } from "primereact/dialog";
-import { ProgressSpinner } from "primereact/progressspinner";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { DataTable } from "primereact/datatable";
+import { Dialog } from "primereact/dialog";
 import { Image } from "primereact/image";
-import NavBar from "../../../pages/NavBar";
+import { ProgressSpinner } from "primereact/progressspinner";
+import { Tag } from "primereact/tag";
+import { Toast } from "primereact/toast";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import config from "../../../config/index";
+import NavBar from "../../../pages/NavBar";
 import "./style.css";
 
 const MyOrders = () => {
@@ -157,14 +157,19 @@ const MyOrders = () => {
     setDetailsDialog(true);
   };
 
+  const goToMyReport = () => {
+    navigate("/my-report");
+  };
+
   const productTemplate = (rowData) => {
     return (
       <div className="product-cell">
-        <span className="product-name">{rowData.productId?.title || "No Product Available"}</span>
+        <span className="product-name">
+          {rowData.productId?.title || "No Product Available"}
+        </span>
       </div>
     );
   };
-  
 
   const statusTemplate = (rowData) => {
     return (
@@ -257,6 +262,13 @@ const MyOrders = () => {
           subTitle="View and manage your order history"
           className="orders-card"
         >
+          <div className="flex justify-end mb-4">
+            <Button onClick={goToMyReport}>
+              <i className="pi pi-file" />
+              <span className="ml-2">Report</span>
+            </Button>
+          </div>
+
           {loading ? (
             <div className="loading-container">
               <ProgressSpinner />
