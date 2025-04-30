@@ -80,6 +80,12 @@ const AppMenu = () => {
           icon: "pi pi-list-check",
           command: () => navigate("/suppliers"),
         },
+        {
+          label: "Reporting",
+          icon: "pi pi-file",
+          command: () => navigate("/supplier-report"),
+        },
+          
       ],
     },
     {
