@@ -198,11 +198,11 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
             path="/user-report"
             element={isLoggedIn ? <UserReportGenerator /> : <LoginForm />}
           />
-        </Routes>
-        <Route
+          <Route
             path="/inventory-report"
             element={isLoggedIn ? <InventoryReportGenerator /> : <LoginForm />}
           />
+        </Routes>
       </div>
     </div>
   );
