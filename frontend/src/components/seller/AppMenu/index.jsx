@@ -83,7 +83,7 @@ const AppMenu = () => {
         {
           label: "Reporting",
           icon: "pi pi-file",
-          command: () => navigate("/suppliers"),
+          command: () => navigate("/supplier-report"),
         },
           
       ],
