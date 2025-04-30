@@ -37,6 +37,7 @@ import SellerOrders from "../features/Seller/Orders/OrderComponent";
 import UserReportGenerator from "../features/Admin/Report/UserReport";
 import rootReducer from "../store/reducers";
 import InventoryReportGenerator from "../features/Seller/Report/InventoryReport";
+import SupplierReportGenerator from "../features/Seller/SupplierReport/SupplierReport";
 
 const store = createStore(rootReducer);
 
@@ -76,16 +77,16 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
       style={{
         marginLeft:
           panelMenuVisible &&
-          !isLandingPage &&
-          !isSignUpPage &&
-          !isLoginPage &&
-          !isProfilePage &&
-          !isSellerListPage &&
-          !isProductPage &&
-          !isProductPageBuyer &&
-          !isAddOrderPage &&
-          !isMyOrderPage &&
-          isLoggedIn
+            !isLandingPage &&
+            !isSignUpPage &&
+            !isLoginPage &&
+            !isProfilePage &&
+            !isSellerListPage &&
+            !isProductPage &&
+            !isProductPageBuyer &&
+            !isAddOrderPage &&
+            !isMyOrderPage &&
+            isLoggedIn
             ? "250px"
             : "0",
         paddingTop: "60px",
@@ -201,6 +202,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route
             path="/inventory-report"
             element={isLoggedIn ? <InventoryReportGenerator /> : <LoginForm />}
+          />
+          <Route
+            path="/supplier-report"
+            element={isLoggedIn ? <SupplierReportGenerator /> : <LoginForm />}
           />
         </Routes>
       </div>
