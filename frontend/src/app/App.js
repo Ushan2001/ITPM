@@ -36,6 +36,7 @@ import MyOrders from "../features/Buyer/Orders/MyOrders";
 import SellerOrders from "../features/Seller/Orders/OrderComponent";
 import UserReportGenerator from "../features/Admin/Report/UserReport";
 import rootReducer from "../store/reducers";
+import InventoryReportGenerator from "../features/Seller/Report/InventoryReport";
 
 const store = createStore(rootReducer);
 
@@ -198,6 +199,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
             element={isLoggedIn ? <UserReportGenerator /> : <LoginForm />}
           />
         </Routes>
+        <Route
+            path="/inventory-report"
+            element={isLoggedIn ? <InventoryReportGenerator /> : <LoginForm />}
+          />
       </div>
     </div>
   );
