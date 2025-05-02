@@ -72,6 +72,7 @@ const addOrder = async (req, res) => {
     await newOrder.save();
     res.status(201).json({
       message: "Order addded successfully!",
+      orderId: newOrder._id,
     });
   } catch (error) {
     res.status(400).json({
