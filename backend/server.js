@@ -14,6 +14,7 @@ const supplierRoute = require("./routes/supplier-route");
 const supplierProductRoute = require("./routes/supplier-product-route");
 const inventoryRoute = require("./routes/inventory-route");
 const orderRoute = require("./routes/order-route");
+const paymentRoute = require("./routes/payment-route");
 
 const path = require("path");
 
@@ -30,6 +31,7 @@ app.use("/api/v1/supplier", supplierRoute);
 app.use("/api/v1/supplier-product", supplierProductRoute);
 app.use("/api/v1/inventory", inventoryRoute);
 app.use("/api/v1/order", orderRoute);
+app.use("/api/v1/payment", paymentRoute);
 
 app.use(
   "/api/v1/uploads/image/profile",
