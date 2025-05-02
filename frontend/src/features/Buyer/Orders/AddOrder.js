@@ -18,7 +18,7 @@ const AddOrder = () => {
   const navigate = useNavigate();
   const toast = useRef(null);
   const [loading, setLoading] = useState(false);
-  const [orderId, setOrderId] = useState("");
+  const [, setOrderId] = useState("");
   const [orderData, setOrderData] = useState({
     productId: "",
     unitAmount: 0,
@@ -31,8 +31,10 @@ const AddOrder = () => {
     paymentStatus: "pending",
   });
   const [product, setProduct] = useState(null);
-  const [hash, setHash] = useState("");
+  const [, setHash] = useState("");
   const [user, setUser] = useState("");
+  const merchanId = config.MRRCHANT_ID;
+  const merchantSecret = config.PAYHERE_MERCHANT_SECRET;
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -104,28 +106,30 @@ const AddOrder = () => {
 
   const fetchHash = async (productId, amount) => {
     try {
-      const response = await fetch(`${config.apiUrl}/api/v1/payment/generate-hash`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          merchant_id: "1226658",
-          order_id: productId,
-          amount: amount,
-          currency: "LKR",
-          merchant_secret: "MzQyMDQwNDU0NTE4ODU4NTA2ODAyMTI0NzczNjI2MjUzNzc5NTc5Mg==",
-        }),
-      });
-  
+      const response = await fetch(
+        `${config.apiUrl}/api/v1/payment/generate-hash`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            merchant_id: merchanId,
+            order_id: productId,
+            amount: amount,
+            currency: "LKR",
+            merchant_secret: merchantSecret,
+          }),
+        }
+      );
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-  
+
       const data = await response.json();
       setHash(data.hash);
       return data.hash;
-  
     } catch (error) {
       console.error("Error fetching hash:", error);
       toast.current.show({
@@ -137,11 +141,6 @@ const AddOrder = () => {
       return null;
     }
   };
-  
-
-  console.log("Hash generated:", hash);
-  console.log("Order Id:", orderId);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setOrderData({
@@ -172,7 +171,7 @@ const AddOrder = () => {
 
     const payment = {
       sandbox: true,
-      merchant_id: "1226658",
+      merchant_id: merchanId,
       return_url: `${window.location.origin}/order-confirmation`,
       cancel_url: `${window.location.origin}/my-orders`,
       notify_url: `${config.apiUrl}/api/v1/payments/notify`,
@@ -324,9 +323,6 @@ const AddOrder = () => {
       currency: "LKR",
     }).format(value);
   };
-
-  console.log("User data:", user);
-
   return (
     <div>
       <div style={{ marginTop: "-5%" }}>
@@ -452,6 +448,7 @@ const AddOrder = () => {
 
               <div className="order-actions">
                 <Button
+                  type="submit"
                   label="Cancel"
                   icon="pi pi-times"
                   className="p-button-outlined p-button-danger"
