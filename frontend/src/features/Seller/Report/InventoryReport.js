@@ -24,15 +24,12 @@ const InventoryReportGenerator = () => {
     includeDates: true,
     includeInventoryValue: true,
   });
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [, setCategories] = useState([]);
+  const [selectedCategory] = useState(null);
+  const [searchQuery] = useState("");
   const [generatingReport, setGeneratingReport] = useState(false);
-  const [statuses, setStatuses] = useState([
-    { label: "Active", value: "active" },
-    { label: "Inactive", value: "inactive" },
-  ]);
-  const [selectedStatus, setSelectedStatus] = useState(null);
+
+  const [selectedStatus] = useState(null);
 
   const toast = useRef(null);
 
@@ -42,7 +39,9 @@ const InventoryReportGenerator = () => {
 
   useEffect(() => {
     if (products.length > 0) {
-      const uniqueCategories = [...new Set(products.map((product) => product.categoryType))];
+      const uniqueCategories = [
+        ...new Set(products.map((product) => product.categoryType)),
+      ];
       setCategories(
         uniqueCategories.map((category) => ({
           label: category.charAt(0).toUpperCase() + category.slice(1),
@@ -56,15 +55,18 @@ const InventoryReportGenerator = () => {
     try {
       const token = localStorage.getItem("token");
       setLoading(true);
-      
+
       // Using the seller specific endpoint as indicated in your API routes
-      const response = await fetch(`${config.apiUrl}/api/v1/inventory/seller-by`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${config.apiUrl}/api/v1/inventory/seller-by`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -102,7 +104,7 @@ const InventoryReportGenerator = () => {
 
   const calculateTotalValue = (products) => {
     return products.reduce((total, product) => {
-      return total + (product.price * product.quantity);
+      return total + product.price * product.quantity;
     }, 0);
   };
 
@@ -229,12 +231,23 @@ const InventoryReportGenerator = () => {
     doc.setFontSize(11);
     doc.text(`Generated At: ${reportData.generatedAt}`, 14, 30);
     doc.text(`Total Products: ${reportData.productCount}`, 14, 36);
-    
+
     if (reportOptions.includeInventoryValue) {
-      doc.text(`Total Inventory Value: $${reportData.totalValue.toFixed(2)}`, 14, 42);
+      doc.text(
+        `Total Inventory Value: $${reportData.totalValue.toFixed(2)}`,
+        14,
+        42
+      );
     }
 
-    const tableColumn = ["SKU", "Title", "Category", "Price", "Quantity", "Status"];
+    const tableColumn = [
+      "SKU",
+      "Title",
+      "Category",
+      "Price",
+      "Quantity",
+      "Status",
+    ];
     if (reportOptions.includeDescription) tableColumn.push("Description");
     if (reportOptions.includeSupplier) tableColumn.push("Supplier");
     if (reportOptions.includeDates) tableColumn.push("Date");
@@ -243,22 +256,23 @@ const InventoryReportGenerator = () => {
 
     reportData.products.forEach((product) => {
       const row = [
-        product.sku || "-", 
-        product.title, 
-        product.categoryType, 
+        product.sku || "-",
+        product.title,
+        product.categoryType,
         `$${product.price.toFixed(2)}`,
         product.quantity,
-        product.status
+        product.status,
       ];
 
       if (reportOptions.includeDescription) {
         // Truncate long descriptions for PDF
-        const shortDesc = product.description.length > 50 
-          ? product.description.substring(0, 50) + "..." 
-          : product.description;
+        const shortDesc =
+          product.description.length > 50
+            ? product.description.substring(0, 50) + "..."
+            : product.description;
         row.push(shortDesc);
       }
-      
+
       if (reportOptions.includeSupplier) row.push(product.supplierId || "-");
       if (reportOptions.includeDates) row.push(product.publishDate || "-");
 
@@ -308,7 +322,8 @@ const InventoryReportGenerator = () => {
           categoryColors[rowData.categoryType?.toLowerCase()] || "bg-gray-600"
         }`}
       >
-        {rowData.categoryType.charAt(0).toUpperCase() + rowData.categoryType.slice(1)}
+        {rowData.categoryType.charAt(0).toUpperCase() +
+          rowData.categoryType.slice(1)}
       </span>
     );
   };
@@ -514,23 +529,10 @@ const InventoryReportGenerator = () => {
             filter
             filterPlaceholder="Search by category"
           />
-          <Column
-            field="price"
-            header="Price"
-            body={priceTemplate}
-            sortable
-          />
-          <Column
-            field="quantity"
-            header="Quantity"
-            sortable
-          />
+          <Column field="price" header="Price" body={priceTemplate} sortable />
+          <Column field="quantity" header="Quantity" sortable />
           {reportOptions.includeInventoryValue && (
-            <Column
-              header="Value"
-              body={valueTemplate}
-              sortable
-            />
+            <Column header="Value" body={valueTemplate} sortable />
           )}
           <Column
             field="status"
@@ -590,7 +592,9 @@ const InventoryReportGenerator = () => {
               {reportOptions.includeInventoryValue && (
                 <div className="report-info-item">
                   <span className="label">Total Inventory Value:</span>
-                  <span className="value">${reportData.totalValue.toFixed(2)}</span>
+                  <span className="value">
+                    ${reportData.totalValue.toFixed(2)}
+                  </span>
                 </div>
               )}
             </div>
@@ -606,7 +610,11 @@ const InventoryReportGenerator = () => {
               >
                 <Column field="sku" header="SKU" />
                 <Column field="title" header="Title" />
-                <Column field="categoryType" header="Category" body={categoryTemplate} />
+                <Column
+                  field="categoryType"
+                  header="Category"
+                  body={categoryTemplate}
+                />
                 <Column field="price" header="Price" body={priceTemplate} />
                 <Column field="quantity" header="Quantity" />
                 {reportOptions.includeInventoryValue && (
@@ -614,13 +622,16 @@ const InventoryReportGenerator = () => {
                 )}
                 <Column field="status" header="Status" body={statusTemplate} />
                 {reportOptions.includeDescription && (
-                  <Column 
-                    field="description" 
+                  <Column
+                    field="description"
                     header="Description"
                     body={(rowData) => (
-                      <div className="description-cell" title={rowData.description}>
-                        {rowData.description.length > 50 
-                          ? rowData.description.substring(0, 50) + "..." 
+                      <div
+                        className="description-cell"
+                        title={rowData.description}
+                      >
+                        {rowData.description.length > 50
+                          ? rowData.description.substring(0, 50) + "..."
                           : rowData.description}
                       </div>
                     )}
