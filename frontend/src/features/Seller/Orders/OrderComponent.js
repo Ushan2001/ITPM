@@ -217,6 +217,7 @@ const SellerOrders = () => {
   });
 
   const productTemplate = (rowData) => {
+    if (!rowData.productId) return null;
     return (
       <div className="product-cell">
         <span className="product-name">{rowData.productId.title}</span>
