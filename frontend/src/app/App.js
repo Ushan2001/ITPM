@@ -1,32 +1,43 @@
 import React, { useState } from "react";
+import { Provider, useSelector } from "react-redux";
 import {
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
   useLocation,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { createStore } from "redux";
 import AdminAppMenu from "../components/admin/AppMenu";
 import SellerAppMenu from "../components/seller/AppMenu";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import rootReducer from "../store/reducers";
-import LoginForm from "../features/Users/LoginForm";
-import Profile from "../features/Users/Profile";
+import AdminDashboard from "../features/Admin/Dashboard/Dashboard";
+import MapComponentMark from "../features/Admin/Polygon/MapComponent";
+import MapComponent from "../features/Admin/Polygon/MarkPolygon";
+import SellerProfile from "../features/Admin/SellerProfile/SellerProfile";
+import SellerComponent from "../features/Admin/Sellers/SellerComponent";
 import ActiveUsers from "../features/Admin/UsersList/ActiveUsers";
 import InactiveUsers from "../features/Admin/UsersList/InactiveUsers";
-import MapComponent from "../features/Admin/Polygon/MarkPolygon";
-import SellerComponent from "../features/Admin/Sellers/SellerComponent";
-import MapComponentMark from "../features/Admin/Polygon/MapComponent";
-import LandingPage from "../pages/LandingPage";
-import SignupForm from "../features/Users/SignupForm";
 import ByuerProfile from "../features/Buyer/Profile/Profile";
 import SellersList from "../features/Buyer/SellersList/SellersList";
-import AdminDashboard from "../features/Admin/Dashboard/Dashboard";
-import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
-import SupplierComponent from "../features/Seller/Suppliers/SupplierComponent";
-import EditSupplier from "../features/Seller/Suppliers/EditSupplier";
+import AddProduct from "../features/Seller/Inventory/AddProduct";
+import EditProduct from "../features/Seller/Inventory/EditProduct";
+import ProductComponent from "../features/Seller/Inventory/ProductComponent";
 import SupplierDashboard from "../features/Seller/SupplierDashboard/Dashboard";
+import AddSupplier from "../features/Seller/Suppliers/AddSupplier";
+import EditSupplier from "../features/Seller/Suppliers/EditSupplier";
+import SupplierComponent from "../features/Seller/Suppliers/SupplierComponent";
+import LoginForm from "../features/Users/LoginForm";
+import Profile from "../features/Users/Profile";
+import SignupForm from "../features/Users/SignupForm";
+import LandingPage from "../pages/LandingPage";
+import ProductPage from "../features/Buyer/ProductList/ProductView";
+import ProductPageBuyer from "../features/Buyer/ProductList/ProductViewSellerId";
+import AddOrder from "../features/Buyer/Orders/AddOrder";
+import MyOrders from "../features/Buyer/Orders/MyOrders";
+import SellerOrders from "../features/Seller/Orders/OrderComponent";
+import UserReportGenerator from "../features/Admin/Report/UserReport";
+import rootReducer from "../store/reducers";
+import InventoryReportGenerator from "../features/Seller/Report/InventoryReport";
+import SupplierReportGenerator from "../features/Seller/SupplierReport/SupplierReport";
 
 const store = createStore(rootReducer);
 
@@ -54,6 +65,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
   const isSignUpPage = location.pathname === "/signup";
   const isProfilePage = location.pathname === "/profile";
   const isSellerListPage = location.pathname === "/sellers-list";
+  const isProductPage = location.pathname === "/buyer-product";
+  const isProductPageBuyer = location.pathname === "/seller-product";
+  const isAddOrderPage = location.pathname === "/add-order";
+  const isMyOrderPage = location.pathname === "/my-orders";
   const largeScreen = window.innerWidth >= 1920;
   const userType = localStorage.getItem("userType");
 
@@ -62,12 +77,16 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
       style={{
         marginLeft:
           panelMenuVisible &&
-          !isLandingPage &&
-          !isSignUpPage &&
-          !isLoginPage &&
-          !isProfilePage &&
-          !isSellerListPage &&
-          isLoggedIn
+            !isLandingPage &&
+            !isSignUpPage &&
+            !isLoginPage &&
+            !isProfilePage &&
+            !isSellerListPage &&
+            !isProductPage &&
+            !isProductPageBuyer &&
+            !isAddOrderPage &&
+            !isMyOrderPage &&
+            isLoggedIn
             ? "250px"
             : "0",
         paddingTop: "60px",
@@ -78,6 +97,8 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
         !isLoginPage &&
         !isSignUpPage &&
         !isSellerListPage &&
+        !isAddOrderPage &&
+        !isMyOrderPage &&
         !isProfilePage && (
           <>
             {userType === "admin" ? (
@@ -106,6 +127,10 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/profile" element={<ByuerProfile />} />
           <Route path="/sellers-list" element={<SellersList />} />
+          <Route path="/buyer-product" element={<ProductPage />} />
+          <Route path="/seller-product" element={<ProductPageBuyer />} />
+          <Route path="/add-order" element={<AddOrder />} />
+          <Route path="/my-orders" element={<MyOrders />} />
           <Route
             path="/me"
             element={isLoggedIn ? <Profile /> : <LoginForm />}
@@ -149,6 +174,38 @@ const AppContent = ({ panelMenuVisible, setPanelMenuVisible, isLoggedIn }) => {
           <Route
             path="/supplier-dashboard"
             element={isLoggedIn ? <SupplierDashboard /> : <LoginForm />}
+          />
+          <Route
+            path="/seller-profile"
+            element={isLoggedIn ? <SellerProfile /> : <LoginForm />}
+          />
+          <Route
+            path="/add-product"
+            element={isLoggedIn ? <AddProduct /> : <LoginForm />}
+          />
+          <Route
+            path="/products"
+            element={isLoggedIn ? <ProductComponent /> : <LoginForm />}
+          />
+          <Route
+            path="/edit-product/:id"
+            element={isLoggedIn ? <EditProduct /> : <LoginForm />}
+          />
+          <Route
+            path="/seller-orders"
+            element={isLoggedIn ? <SellerOrders /> : <LoginForm />}
+          />
+          <Route
+            path="/user-report"
+            element={isLoggedIn ? <UserReportGenerator /> : <LoginForm />}
+          />
+          <Route
+            path="/inventory-report"
+            element={isLoggedIn ? <InventoryReportGenerator /> : <LoginForm />}
+          />
+          <Route
+            path="/supplier-report"
+            element={isLoggedIn ? <SupplierReportGenerator /> : <LoginForm />}
           />
         </Routes>
       </div>
